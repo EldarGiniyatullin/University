@@ -1,6 +1,7 @@
 #include <iostream>
-#include "doublylinkedlist.h"
+#include "doublylinkedList.h"
 
+using std::cin;
 using std::cout;
 
 DoublyLinkedList::~DoublyLinkedList()
@@ -34,18 +35,23 @@ DoublyLinkedList::Element *DoublyLinkedList::createElement()
     return newEl;
 }
 
-void DoublyLinkedList::addElement(int number)
+void DoublyLinkedList::addElement(double number)
 {
     Element *newEl = createElement();
-    newEl->number = number;
+    newEl->Data.number = number;
+    newEl->isSymbol = false;
+}
+
+void DoublyLinkedList::addElement(char symbol)
+{
+    Element *newEl = createElement();
+    newEl->Data.symbol = symbol;
+    newEl->isSymbol = true;
 }
 
 void DoublyLinkedList::deleteElement(int number)
 {
-    if (numberOfElements < number)
-        cout << "\nNumber of elements in list is less than the number";
-    else
-    {
+    if (numberOfElements >= number){
         Element **tmp = &head;
         for (int i = 1; i < number; i++)
             tmp = &((*tmp)->next);
@@ -58,15 +64,27 @@ void DoublyLinkedList::deleteElement(int number)
         delete elementToDelete;
         numberOfElements--;
     }
+//    else
+//        cout << "\nNumber of elements in list is less than the number";
 }
 
 void DoublyLinkedList::printList()
 {
     cout << "\n";
     Element *tmp = head;
-    while (tmp)
+    if (tmp)
     {
-        cout << tmp->number;
-        tmp = tmp->next;
+        cout << "The list content:";
+        while (tmp)
+        {
+            cout << " ";
+            if (tmp->isSymbol)
+                cout << tmp->Data.symbol;
+            else
+                cout << tmp->Data.number;
+            tmp = tmp->next;
+        }
     }
+    else
+    cout << "There is nothing to print";
 }

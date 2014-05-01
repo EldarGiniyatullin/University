@@ -2,6 +2,10 @@
 
 #include "stack.h"
 
+/**
+ * @brief The LinkedList class is implementation of stack based on pointers
+ * @detailed The LinkedList class contains only int-values
+ */
 class LinkedStack : public Stack
 {
 public:

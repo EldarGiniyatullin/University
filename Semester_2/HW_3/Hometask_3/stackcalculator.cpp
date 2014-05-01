@@ -13,6 +13,7 @@ StackCalculator::StackCalculator()
     isExpressionConverted = false;
     isCorrect = true;
     result = 0;
+    expInString = "";
 }
 
 StackCalculator::~StackCalculator()
@@ -245,6 +246,71 @@ double StackCalculator::calculate(double firstNumber, double secondNumber, char 
         break;
     default:
         break;
+    }
+}
+
+void StackCalculator::readingNumberFromString(int &symbol)
+{
+    QString tempNumber = "";
+    bool isDot = false;
+    while (symbol <= expInString.length() && ((expInString[symbol] <= '9' && expInString[symbol] >= '0') || expInString[symbol] == '.'))
+    {
+        if (expInString[symbol] == '.')
+            if (isDot)
+                incorrectExpression();
+            else
+                isDot = true;
+        tempNumber = tempNumber + expInString[symbol++];
+    }
+    if (isCorrect)
+    {
+        bool isDouble = true;
+        originalExpression->addElement(tempNumber.toDouble(&isDouble));
+        if (!isDouble)
+            incorrectExpression();
+    }
+    symbol--;
+}
+
+void StackCalculator::readExpressionFromString()
+{
+    if (expInString != "")
+    {
+        int i = 0;
+        char tmpSymbol  = expInString.toUtf8().data()[i];
+        while (i <= expInString.length() && !isOtherSymbol(tmpSymbol))
+        {
+                tmpSymbol  = expInString.toUtf8().data()[i];
+                if (isBreak(tmpSymbol))
+                {
+                    originalExpression->addElement(tmpSymbol);
+                    if (tmpSymbol == '(')
+                        isOperatorLast = true;
+                }
+                else if (isOperator(tmpSymbol))
+                {
+                    if (isOperatorLast)
+                    {                                       // for 5+(-25)
+                        if (tmpSymbol == '+' || tmpSymbol == '-')
+                        {
+                            readingNumberFromString(i);
+                        }
+                        else                                // for 5+(/25)
+                            incorrectExpression();
+                    }
+                    else
+                    {
+                        originalExpression->addElement(tmpSymbol);
+                        isOperatorLast = true;
+                    }
+                }
+                else if (isOperand(tmpSymbol))
+                {
+                    readingNumberFromString(i);
+                    isOperatorLast = false;
+                }
+                i++;
+        }
     }
 }
 

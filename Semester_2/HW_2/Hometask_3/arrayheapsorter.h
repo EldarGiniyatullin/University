@@ -4,9 +4,15 @@
 
 template <typename T>
 
+/**
+ * @brief The ArrayHeapSorter class sorts an array BY ELEMENTS OF FIRST ROW using Heapsort sorting algorithm
+ */
 class ArrayHeapSorter : public ArraySorter<T>
 {
 public:
+    /**
+     * @brief swap is supplementary method that changes values of two variables
+     */
     void swap(T* &first, T* &second)
     {
         if (first != second)
@@ -16,6 +22,10 @@ public:
             second = temp;
         }
     }
+    /**
+     * @param array is array to sort
+     * @param arraySize is size of array parameter
+     */
     void sortArray(T **array, unsigned int arraySize)
     {
         for (int i = arraySize / 2; i >= 1; i--) /*- 1 + (arraySize % 2 == 0 ? 1 : 0)*/

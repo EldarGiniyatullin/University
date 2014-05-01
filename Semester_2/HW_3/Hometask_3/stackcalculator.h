@@ -1,12 +1,20 @@
+/*****
+ *
+ * Calculator is potentially expand to a larger number of operators
+ *
+ *****/
+
 #pragma once
 
 #include "stack.h"
 #include "doublylinkedlist.h"
 #include "linkedstack.h"
+#include <QString>
+
 
 /**
  * @brief The StackCalculator class is class for calculation of simple expressions
- * @detailed The StackCalculator can read expression from console,
+ * @detailed The StackCalculator can read expression string-variable,
  * convert it to Reverse Polish Notation (RPN), check its correctness
  * and calculate the result
  * Calculator is potentially expand to a larger number of operators
@@ -19,7 +27,7 @@ public:
     StackCalculator();
     ~StackCalculator();
     /**
-     * @brief readOriginalExpression reads expression from console
+     * @brief readOriginalExpression reads expression from string-variable
      */
     void readOriginalExpression();
     /**
@@ -41,6 +49,12 @@ public:
      * @brief result is the result of calculated expression
      */
     double result;
+    QString expInString;
+    /**
+     * @brief isCorrect is false if expression's incorrectness revealed
+     */
+    bool isCorrect;
+    void readExpressionFromString();
     void printResult();
 protected:
     /**
@@ -82,10 +96,6 @@ protected:
      */
     void incorrectExpression();
     /**
-     * @brief isCorrect is false if expression's incorrectness revealed
-     */
-    bool isCorrect;
-    /**
      * @brief orderOfOperator defines the order of binary operation numerically
      * @param symbolOfOperator. The operation determines by its symbol
      * @return number. The greater number, the higher order of operation
@@ -99,6 +109,7 @@ protected:
      * @return the result of operation
      */
     double calculate(double firstNumber, double secondNumber, char operationSign);
+    void readingNumberFromString(int &symbol);
 private:
     /**
      * @brief readingNumber reads number from the console

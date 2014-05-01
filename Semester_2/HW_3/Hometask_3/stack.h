@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * @brief The Stack class - the interface class
+ * @brief The Stack class is the abstract class
  * @detailed The Stack class includes standart functional using in stack and declared as virtual
  */
 class Stack

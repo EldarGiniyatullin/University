@@ -16,11 +16,11 @@ public:
     void addElement(double number);
     void addElement(char symbol);
     void deleteElement(int number);
+    /**
+     * @brief printList prints list content to console
+     */
     void printList();
 protected:
-    /**
-     * @brief The Element struct contains a list element
-     */
     struct Element
     {
         /**

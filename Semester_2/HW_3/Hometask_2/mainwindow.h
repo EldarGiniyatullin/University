@@ -20,7 +20,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QString convertToQString(int numberToConvert);
 };
 
 #endif // MAINWINDOW_H

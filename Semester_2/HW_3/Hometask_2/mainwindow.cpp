@@ -8,17 +8,33 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->comboBox->addItem("+", 0);
-    ui->comboBox->addItem("-", 1);
-    ui->comboBox->addItem("*", 2);
-    ui->comboBox->addItem("/", 3);
+  /**
+    *@brief creating the operations and matching them with numbers
+    *@detailed this list of operands is potentially extendable, but the editor should accordingly correct the function SimpleCalculator::calculate()
+    */
+    ui->operatorsBox->addItem("+", 0);
+    ui->operatorsBox->addItem("-", 1);
+    ui->operatorsBox->addItem("*", 2);
+    ui->operatorsBox->addItem("/", 3);
 
-    this->setCentralWidget(ui->horizontalWidget);
+  /**
+    *@brief setting ui->mainWidget as the central
+    */
+    this->setCentralWidget(ui->mainWidget);
 
-    connect(ui->spinBox, SIGNAL(valueChanged(int)), this, SLOT(lineEditOutput()));
-    connect(ui->comboBox, SIGNAL(activated(int)), this, SLOT(lineEditOutput()));
-    connect(ui->spinBox_2, SIGNAL(valueChanged(int)), this, SLOT(lineEditOutput()));
-    connect(ui->action, SIGNAL(triggered()), this, SLOT(close()));
+  /**
+    *@brief the signals that need for momental changing of the result situated in ui->lineEdit
+    *@param ui->slotForFirstNumber the slot where user chooses the first operand
+    *@param ui->slotForSecondNumber the slot where user chooses the second operand
+    */
+    connect(ui->slotForFirstNumber, SIGNAL(valueChanged(int)), this, SLOT(lineEditOutput()));
+    connect(ui->operatorsBox, SIGNAL(activated(int)), this, SLOT(lineEditOutput()));
+    connect(ui->slotForSecondNumber, SIGNAL(valueChanged(int)), this, SLOT(lineEditOutput()));
+
+   /**
+    *@brief leds the pressing of ui->exitButton to exit the program
+    */
+    connect(ui->exitButton, SIGNAL(triggered()), this, SLOT(close()));
 }
 
 MainWindow::~MainWindow()
@@ -26,16 +42,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-QString MainWindow::convertToQString(int numberToConvert)
-{
-    QString tmp = QString::number(numberToConvert);
-    return tmp;
-}
-
+/**
+ * @brief function displays the result of binary operation on ui->slotForResult
+ * @throw program puts "N/A" (not allowed) if there is a division by zero
+ */
 void MainWindow::lineEditOutput()
 {
-    if (ui->spinBox_2->value() == 0 && ui->comboBox->currentIndex() == 3)
-        ui->lineEdit->setText("N/A");
+    if (ui->slotForSecondNumber->value() == 0 && ui->operatorsBox->currentIndex() == 3)
+        ui->slotForResult->setText("N/A");
     else
-        ui->lineEdit->setText(convertToQString(SimpleCalculator::calculate(ui->spinBox->value(), ui->comboBox->currentIndex(), ui->spinBox_2->value())));
+        ui->slotForResult->setText(QString::number(SimpleCalculator::calculate(ui->slotForFirstNumber->value(), ui->operatorsBox->currentIndex(), ui->slotForSecondNumber->value())));
 }

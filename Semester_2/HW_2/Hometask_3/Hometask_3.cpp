@@ -5,6 +5,9 @@
 
 using namespace std;
 
+/**
+ * @brief main sorts a random two-dimensional square array by elements of first row and prints it to console
+ */
 int main()
 {
     int **array = randomArray(7);

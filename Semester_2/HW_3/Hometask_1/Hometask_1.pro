@@ -12,8 +12,9 @@ TARGET = Hometask_1
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES +=\
+        mainwindow.cpp \
+    Hometask_1.cpp
 
 HEADERS  += mainwindow.h
 

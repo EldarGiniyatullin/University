@@ -2,6 +2,9 @@
 
 template <typename T>
 
+/**
+ * @brief The ArraySorter class is template interface class for sorting two-dimensional square arrays
+ */
 class ArraySorter
 {
 public:

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <typeinfo>
 #include "linkedlist.h"
 
 using std::cout;
@@ -31,6 +30,10 @@ void LinkedList::addElement(int number)
     newEl->number = number;
 }
 
+/**
+ * @brief LinkedList::deleteElement
+ * @param number
+ */
 void LinkedList::deleteElement(int number)
 {
     if (numberOfElements < number)

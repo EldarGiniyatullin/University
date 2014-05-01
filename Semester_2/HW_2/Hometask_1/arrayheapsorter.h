@@ -14,14 +14,11 @@ public:
             T temp = first;
             first = second;
             second = temp;
-//            first = first ^ second;
-//            second = first ^ second;
-//            first = first ^ second;
         }
     }
     void sortArray(T *array, unsigned int arraySize)
     {
-        for (int i = arraySize / 2 /*- 1 + (arraySize % 2 == 0 ? 1 : 0)*/; i >= 1; i--)
+        for (int i = arraySize / 2; i >= 1; i--)
         {
             if (array[i - 1] < array[2 * i - 1])
                 swap(array[i - 1], array[2 * i - 1]);
