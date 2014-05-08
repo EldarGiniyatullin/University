@@ -18,4 +18,7 @@ HEADERS += \
     hashfunction.h \
     hashfunction1.h
 
-OTHER_FILES += text2.txt
+OTHER_FILES += \
+    text.txt \
+    output.txt \
+    input.txt

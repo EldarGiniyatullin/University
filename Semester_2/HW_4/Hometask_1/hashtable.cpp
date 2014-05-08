@@ -11,29 +11,24 @@ using std::endl;
 
 HashTable::HashTable()
 {
-    totalValues = 1000;
-    hashData = new Element*[totalValues];
-    for (int i = 0; i < totalValues; i++)
-    {
-        hashData[i] = nullptr;
-    }
+    hashFunction = new StandartHashFunction;
+    hashData = new Element*[hashFunction->hashBase];
+    zeroHashData();
+    oldHashBase = hashFunction->hashBase;
     usedValues = 0;
     maxList = new List();
     maxListNumber = 0;
     storedData = 0;
-    hashFunction = new StandartHashFunction;
 }
 
 
 HashTable::~HashTable()
 {
-    delete hashFunction;
-    totalValues = 0;
     usedValues = 0;
     delete maxList;
     maxListNumber = 0;
     storedData = 0;
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < hashFunction->hashBase; i++)
     {
         while (hashData[i] != nullptr)
         {
@@ -43,6 +38,7 @@ HashTable::~HashTable()
             hashData[i] = tmp;
         }
     }
+    delete hashFunction;
     delete[] hashData;
 }
 
@@ -57,7 +53,6 @@ void HashTable::refreshHashData()
             hashData[i] = tmp;
         }
     }
-    totalValues = 0;
     usedValues = 0;
     delete maxList;
     maxList = new List();
@@ -67,6 +62,7 @@ void HashTable::refreshHashData()
 
 void HashTable::setFunction(HashFunction *newFunction)
 {
+    oldHashBase = hashFunction->hashBase;
     delete hashFunction;
     hashFunction = newFunction;
     reHash();
@@ -75,9 +71,10 @@ void HashTable::setFunction(HashFunction *newFunction)
 void HashTable::reHash()
 {
     Element **tempData = hashData;
-    hashData = new Element* [totalValues];
+    hashData = new Element* [hashFunction->hashBase];
+    zeroHashData();
     Element *tmp = nullptr;
-    for (unsigned int i = 0; i < totalValues; i++)
+    for (unsigned int i = 0; i < oldHashBase; i++)
     {
         if (tempData[i])
         {
@@ -91,6 +88,31 @@ void HashTable::reHash()
         }
     }
     delete tempData;
+}
+
+unsigned int HashTable::findValue(UserString &word)
+{
+    unsigned int value = hashFunction->hash(word);
+    Element *tmp = hashData[value];
+    while (tmp)
+    {
+        if (areEqual(word, tmp->string))
+        {
+            return value;
+            break;
+        }
+    }
+    if (!tmp)
+        throw NoValueInHashData();
+
+}
+
+void HashTable::zeroHashData()
+{
+    for (int i = 0; i < hashFunction->hashBase; i++)
+    {
+        hashData[i] = nullptr;
+    }
 }
 
 void HashTable::hashing(UserString &word)
@@ -117,20 +139,20 @@ void HashTable::hashing(UserString &word)
     tmp = nullptr;
 }
 
-void HashTable::printHashTable()
+void HashTable::printHashTable(std::fstream &fout)
 {
-    for (int i = 0; i < totalValues; i++)
+    for (int i = 0; i < hashFunction->hashBase; i++)
     {
-        if ( hashData[i] != nullptr)
+        if (hashData[i] != nullptr)
         {
             Element *tmp =  hashData[i];
             while (tmp)
             {
-                printString(tmp->string);
-                cout << "(" << tmp->number << ") ";
+                printString(tmp->string, fout);
+                fout << "(" << tmp->number << ") ";
                 tmp = tmp->next;
             }
-            cout << std::endl;
+            fout << std::endl;
         }
     }
 }
@@ -141,7 +163,7 @@ void HashTable::refreshMaxInf()
     maxList = new List();
     maxListNumber = 0;
     usedValues = 0;
-    for (int i = 0; i < totalValues; i++)
+    for (int i = 0; i < hashFunction->hashBase; i++)
     {
         Element *curr =  hashData[i];
         int tmp = 0;
@@ -168,33 +190,33 @@ void HashTable::refreshMaxInf()
     }
 }
 
-void HashTable::printHashDataInf()
+void HashTable::printHashDataInf(std::fstream &fout)
 {
-    cout << "Load factor = " << std::setprecision(6) << (float)(storedData * 1.0 /  totalValues) << endl;
-    cout << "Average length = " << std::setprecision(6) << (float)( storedData * 1.0 /  usedValues) << endl;
+    fout << "Load factor = " << std::setprecision(6) << (float)(storedData * 1.0 /  hashFunction->hashBase) << endl;
+    fout << "Average length = " << std::setprecision(6) << (float)( storedData * 1.0 /  usedValues) << endl;
     List::ListElement *max =  maxList->first;
     while (max)
     {
-        cout << "The key " << max->value << " has the maximal number of words (" <<  maxListNumber << ")" << " and includes words: " << endl;
+        fout << "The key " << max->value << " has the maximal number of words (" <<  maxListNumber << ")" << " and includes words: " << endl;
         Element *curr =  hashData[max->value];
         while (curr)
         {
-            cout << " ";
-            printString(curr->string);
-            cout << " ";
+            fout << " ";
+            printString(curr->string, fout);
+            fout << " ";
             curr = curr->next;
         }
         max = max->next;
-        cout << endl;
+        fout << endl;
     }
-    cout << endl;
-    cout << "Totally added " <<  storedData << " words" << endl;
-    cout << "\"Empty\" keys number = " <<  totalValues - usedValues << endl;
+    fout << endl;
+    fout << "Totally added " <<  storedData << " words" << endl;
+    fout << "\"Empty\" keys number = " <<  hashFunction->hashBase - usedValues << endl;
 }
 
 void HashTable::clearData()
 {
-    for (int i = 0; i < totalValues; i++)
+    for (int i = 0; i < hashFunction->hashBase; i++)
         delete hashData[i];
 }
 

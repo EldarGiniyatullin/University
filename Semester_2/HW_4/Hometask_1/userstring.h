@@ -45,6 +45,8 @@ void deleteString(UserString string);
 
 void readWord(UserString &word, Status isCapitalEqualSmall);
 
-void readWord(UserString &word, Status isCapitalEqualSmall, std::ifstream &fin);
+void readWord(UserString &word, Status isCapitalEqualSmall, std::fstream &fin);
+
+void printString(UserString &string, std::fstream &fin);
 
 void printString(UserString &string);

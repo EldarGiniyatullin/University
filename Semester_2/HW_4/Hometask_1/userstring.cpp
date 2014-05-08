@@ -5,9 +5,8 @@
 
 using std::cin;
 using std::cout;
-using std::ifstream;
-using std::ofstream;
 using std::fstream;
+using std::ofstream;
 
 
 UserString createNew()
@@ -45,7 +44,7 @@ void readWord(UserString &word, Status isCapitalEqualSmall)
     }
 }
 
-void readWord(UserString &word, Status isCapitalEqualSmall, ifstream &fin)
+void readWord(UserString &word, Status isCapitalEqualSmall, fstream &fin)
 {
     char symbol;
     fin.get(symbol);
@@ -250,6 +249,16 @@ void deleteString(UserString string)
     string.length = 0;
 }
 
+void printString(UserString &string, fstream &fin)
+{
+    UserSymbol *curr = string.first;
+    for (int i = 0; i < string.length; i++)
+    {
+        fin << curr->symbol;
+        curr = curr->next;
+    }
+}
+
 void printString(UserString &string)
 {
     UserSymbol *curr = string.first;
@@ -260,12 +269,3 @@ void printString(UserString &string)
     }
 }
 
-void printString(UserString &string, fstream &fin)
-{
-    UserSymbol *curr = string.first;
-    for (int i = 0; i < string.length; i++)
-    {
-        fin << curr->symbol;
-        curr = curr->next;
-    }
-}

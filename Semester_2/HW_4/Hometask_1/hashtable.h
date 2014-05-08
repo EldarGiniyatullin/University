@@ -1,8 +1,11 @@
 #pragma once
 
+#include <fstream>
 #include "list.h"
 #include "userstring.h"
 #include "hashfunction.h"
+
+using std::fstream;
 
 class HashTable
 {
@@ -10,6 +13,12 @@ public:
     HashTable();
 
     ~HashTable();
+
+
+    class NoValueInHashData
+    {
+
+    };
 
     struct Element
     {
@@ -33,9 +42,9 @@ public:
 
     void countMaxInf();
 
-    void printHashTable();
+    void printHashTable(fstream &fout);
 
-    void printHashDataInf();
+    void printHashDataInf(fstream &fout);
 
     void clearData();
 
@@ -44,21 +53,25 @@ public:
     void setFunction(HashFunction *newFunction);
 
     void reHash();
+
+    unsigned int findValue(UserString &word);
 private:
 //    static int standartFunction(UserString &string);
-
-    unsigned int totalValues;
 
     class StandartHashFunction : public HashFunction
     {
     public:
+        StandartHashFunction()
+        {
+            hashBase =  1000;
+        }
         int hash(UserString &string)
         {
             int hashCode = 0;
             UserSymbol **tmp = &string.first;
             for (int i = 0; i < string.length; i++)
             {
-                hashCode = (hashCode + 31 * ((int)((*tmp)->symbol))) % 1000;
+                hashCode = (hashCode + 17 * ((int)((*tmp)->symbol))) % hashBase;
                 tmp = &((*tmp)->next);
             }
             return hashCode;
@@ -66,4 +79,8 @@ private:
     };
 
     StandartHashFunction standartFunction;
+
+    void zeroHashData();
+
+    unsigned int oldHashBase;
 };

@@ -5,8 +5,8 @@
 class HashFunction
 {
 public:
-//    HashFunction(){    }
+    HashFunction(){    }
     virtual int hash(UserString &string) = 0;
 //protected:
-//    const unsigned int hashBase = 0;
+    unsigned int hashBase;
 };
