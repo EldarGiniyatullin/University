@@ -1,7 +1,11 @@
 TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
-CONFIG -= qt
+CONFIG += testcore
+
+QT += core
+QT +=testlib
+
 
 CONFIG += c++11
 
@@ -18,9 +22,13 @@ HEADERS += \
     subtraction.h \
     division.h \
     numericaloperand.h \
-    operatorclass.h
+    operatorclass.h \
+    testparsetree.h
 
 OTHER_FILES += \
     expression.txt \
-    result.txt
+    result.txt \
+    testparsetree1.txt \
+    testparsetree2.txt \
+    testparsetree3.txt
 

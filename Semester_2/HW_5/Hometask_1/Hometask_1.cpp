@@ -1,12 +1,16 @@
 #include <iostream>
 #include <fstream>
 #include "parsetree.h"
+#include "testparsetree.h"
 
 
 using namespace std;
 
 int main()
 {
+    TestParseTree testParseTree;
+    QTest::qExec(&testParseTree);
+
     ParseTree* a = new ParseTree();
     ifstream fin("expression.txt");
     if (!fin.is_open())
@@ -26,7 +30,11 @@ int main()
     }
     catch (ParseTree::NoParsedExpression &)
     {
-        cout << "An expression is not parsed yet\n";
+        cout << "\nAn expression is not parsed yet\n";
+    }
+    catch (Division::DivisionByZero &)
+    {
+        cout << "\nDivision by zero!\n";
     }
     a->parseExpression(fin);
     fin.close();

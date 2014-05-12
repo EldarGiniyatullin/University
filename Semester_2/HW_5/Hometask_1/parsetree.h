@@ -21,6 +21,11 @@ public:
     {
     }
 
+    ~ParseTree()
+    {
+        delete head;
+    }
+
     /**
      * @brief parseExpression builds a parse tree
      * @param fin is input file with expression
@@ -40,6 +45,13 @@ public:
     double calculate();
 
     class NoParsedExpression{};
+
+    void clearTree()
+    {
+        delete head;
+        head = nullptr;
+    }
+
 protected:
     /**
      * @brief buildTree is service method that builds parts of parse tree
@@ -58,5 +70,3 @@ protected:
 private:
     OperatorClass* head;
 };
-
-

@@ -64,6 +64,11 @@ void ParseTree::parseExpression(std::ifstream &fin)
 
 void ParseTree::printTree(std::ofstream &fout)
 {
-    head->print(fout);
+    if (head)
+    {
+        head->print(fout);
+    }
+    else
+        std::cout << "\nNo expression\n";
 }
 

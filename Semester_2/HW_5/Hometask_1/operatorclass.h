@@ -18,8 +18,13 @@ public:
     /**
      * @brief OperatorClass is constructor
      */
-    OperatorClass()
-    {}
+    OperatorClass(){}
+
+    ~OperatorClass()
+    {
+        delete left;
+        delete right;
+    }
 
     /**
      * @brief result is a service method that calculates an operation with its two operands
@@ -57,16 +62,18 @@ public:
         catch (DivisionByZero &)
         {
             std::cout << "Division by zero!\n";
+            throw DivisionByZero();
         }
         return tmp;
     }
 
-protected:
     /**
      * @brief The divisionByZero class is a service exception type
      */
     class DivisionByZero{};
 
+
+protected:
     char operatorSymbol;
 
     /**
