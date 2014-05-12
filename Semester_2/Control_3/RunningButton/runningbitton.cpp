@@ -31,7 +31,7 @@ RunningBitton::~RunningBitton()
 void RunningBitton::run()
 {
     srand(time(NULL));
-    theButton->move((rand() * rand()) % value1, (rand() * rand()) % value2);
+    theButton->move((theButton->x() + rand() * 50) % value1, (theButton->y() + rand() * 50) % value2);
     theButton->setText("ha!");
     QTimer::singleShot(300, this, SLOT(emptyText()));
 }
@@ -46,8 +46,9 @@ bool RunningBitton::eventFilter(QObject *object, QEvent *event)
 {
     if (object == theButton)
     {
-        if (event->type() == QEvent::Enter)
+        if (event->type() == QEvent::Enter || event->type() == QEvent::Leave || event->type() == QEvent::HoverMove)
         {
+//            while(!((QMouseEvent::x() < theButton->x() || ui->QMouseEvent::x() > (theButton->x() + 50))  && (ui->QMouseEvent::y() < theButton->y() || ui->QMouseEvent::y() > (theButton->y() + 50))))
             run();
             return true;
         }
