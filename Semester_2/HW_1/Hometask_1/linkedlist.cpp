@@ -37,7 +37,7 @@ void LinkedList::addElement(int number)
 void LinkedList::deleteElement(int number)
 {
     if (numberOfElements < number)
-        cout << "\nNumber of elements in list is less than the number";
+        cout << "\nNumber of elements in list is less than the number\n";
     else
     {
         Element **tmp = &head;

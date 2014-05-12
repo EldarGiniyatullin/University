@@ -22,6 +22,8 @@ public:
     void push(char symbolToPush);
     void pop();
     void printStack();
+    bool isStackFull();
+
 protected:
     struct Element
     {
@@ -37,11 +39,9 @@ protected:
     };
     Element *array;
     unsigned int lengthOfStack;
-/**
-@detailed current position of element that will store the new data + 1
-currentPositionOfBottom == 0 means that the stack is empty
-*/
+    /**
+     @detailed current position of element that will store the new data + 1
+     currentPositionOfBottom == 0 means that the stack is empty
+     */
     unsigned int currentPositionOfBottom;
-private:
-    bool isStackFull();
 };

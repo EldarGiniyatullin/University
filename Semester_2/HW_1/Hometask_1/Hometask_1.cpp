@@ -1,11 +1,15 @@
 #include <iostream>
 #include "doublylinkedlist.h"
 #include "linkedlist.h"
+#include "listtest.h"
 
 using namespace std;
 
 int main()
 {
+    ListTest listTest;
+    QTest::qExec(&listTest);
+
     List *a = new DoublyLinkedList();
     a->addElement(1);
     a->printList();

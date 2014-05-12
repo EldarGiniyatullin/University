@@ -1,6 +1,7 @@
 #include <iostream>
 #include "arrayheapsorter.h"
 #include "arrayquicksorter.h"
+#include "testsorters.h"
 
 
 using namespace std;
@@ -16,6 +17,9 @@ void printArray(T *array)
 
 int main()
 {
+    TestSorters testSorters;
+    QTest::qExec(&testSorters);
+
     int *a = new int[5];
     double *b = new double[5];
     a[0] = 4;

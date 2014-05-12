@@ -19,11 +19,11 @@ public:
 //            first = first ^ second;
         }
     }
-    void quickSort(T *array, unsigned int first, unsigned int last)
+    void quickSort(T *array, int first, int last)
     {
-        T x = array[first + (last - first) / 2];
         int i = first;
         int j = last;
+        T x = array[(i + j) / 2];
         while(i <= j)
         {
             while(array[i] < x)

@@ -2,7 +2,12 @@ TEMPLATE = app
 CONFIG += console
 CONFIG += console c++11
 CONFIG -= app_bundle
-CONFIG -= qt
+CONFIG += testcase
+
+QT += core
+QT += testlib
+
+CONFIG += c++11
 
 QMAKE_CXXFLAGS += -std=c++0x
 
@@ -19,7 +24,9 @@ HEADERS += \
     stackcalculator.h \
     arraystack.h \
     doublylinkedlist.h \
-    list.h
+    list.h \
+    stacktest.h \
+    calculatortest.h
 
 OTHER_FILES += \
     temp.txt

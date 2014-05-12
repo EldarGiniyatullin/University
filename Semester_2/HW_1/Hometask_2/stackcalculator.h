@@ -41,6 +41,10 @@ public:
      * @brief result is the result of calculated expression
      */
     double result;
+    bool isExpressionCorrect()
+    {
+        return isCorrect;
+    }
     void printResult();
 protected:
     /**

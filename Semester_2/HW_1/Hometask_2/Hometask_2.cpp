@@ -4,6 +4,8 @@
 #include "arraystack.h"
 #include "doublylinkedlist.h"
 #include "stackcalculator.h"
+#include "stacktest.h"
+#include "calculatortest.h"
 
 using namespace std;
 
@@ -34,6 +36,13 @@ int main()
 //    a->push(3);
 //    a->printStack();
 //    delete a;
+
+    StackTest stackTest;
+    QTest::qExec(&stackTest);
+
+    CalculatorTest calculatorTest;
+    QTest::qExec(&calculatorTest);
+
     StackCalculator *a = new StackCalculator();
     a->readOriginalExpression();
     a->reversePolishNotation();

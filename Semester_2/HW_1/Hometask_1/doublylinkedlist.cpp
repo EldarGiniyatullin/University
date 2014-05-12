@@ -43,7 +43,7 @@ void DoublyLinkedList::addElement(int number)
 void DoublyLinkedList::deleteElement(int number)
 {
     if (numberOfElements < number)
-        cout << "\nNumber of elements in list is less than the number";
+        cout << "\nNumber of elements in list is less than the number\n";
     else
     {
         Element **tmp = &head;

@@ -2,6 +2,7 @@
 #include "arraysoft.h"
 #include "arraysorter.h"
 #include "arrayheapsorter.h"
+#include "testrowsorter.h"
 
 using namespace std;
 
@@ -10,6 +11,9 @@ using namespace std;
  */
 int main()
 {
+    TestRowSorter testRowSorter;
+    QTest::qExec(&testRowSorter);
+
     int **array = randomArray(7);
     arrayPrinter(array, 7);
     cout << "\n";
