@@ -1,12 +1,12 @@
 #pragma once
 
-#include "userstring.h"
+#include <string>
 
 class HashFunction
 {
 public:
     HashFunction(){    }
-    virtual int hash(UserString &string) = 0;
+    virtual int hash(std::string word) = 0;
 //protected:
     unsigned int hashBase;
 };

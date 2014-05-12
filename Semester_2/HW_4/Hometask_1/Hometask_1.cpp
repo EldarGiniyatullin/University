@@ -1,9 +1,10 @@
 #include <iostream>
 #include <fstream>
-#include "userstring.h"
+#include <string>
 #include "hashfunction.h"
 #include "hashfunction1.h"
 #include "hashtable.h"
+#include "testhash.h"
 
 using namespace std;
 
@@ -20,16 +21,23 @@ void readingFromFile(fstream &fin, HashTable *currHash)
         if (!fin.eof())
         {
             fin.putback(ch);
-            UserString word = createNew();
-            readWord(word, yes, fin);
+            string word = "";
+            fin.get(ch);
+            while (((ch >= 'a' && ch <= 'z') || (ch >='A' && ch <='Z') && !fin.eof()))
+            {
+                word += ch;
+                fin.get(ch);
+            }
             currHash->hashing(word);
-            deleteString(word);
         }
     }
 }
 
 int main()
 {
+    TestHash testHash;
+    QTest::qExec(&testHash);
+
     fstream fin("text.txt");
     if (!fin.is_open())
     {
@@ -59,20 +67,26 @@ int main()
         {
             for (int i = 0; i < 3; i++)
             {
-                UserString word = createNew();
-                readWord(word, yes, fin);
-                printString(word);
-                cout << " - ";
+                char ch;
+                fin.get(ch);
+                string word = "";
+                while (((ch >= 'a' && ch <= 'z') || (ch >='A' && ch <='Z') && !fin.eof()))
+                {
+                    word += ch;
+                    fin.get(ch);
+                }
+                cout << word << " - ";
                 try
                 {
                     cout << " " << currHash->findValue(word) << "\n";
                 }
-                catch (HashTable::NoValueInHashData)
+                catch (HashTable::NoValueInHashData &)
                 {
-                    cout << "The word\"";
-                    printString(word);
-                    cout << "\"is not included to hash table\n";
+                    cout << "The word \"";
+                    cout << word;
+                    cout << "\" is not included to hash table\n";
                 }
+                currHash->hashing(word);
             }
         }
         delete currHash;

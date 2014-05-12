@@ -1,11 +1,12 @@
 #pragma once
 
+#include <string>
 #include <fstream>
 #include "list.h"
-#include "userstring.h"
 #include "hashfunction.h"
 
 using std::fstream;
+using std::string;
 
 class HashTable
 {
@@ -23,24 +24,15 @@ public:
     struct Element
     {
         int number;
-        UserString string;
+        std::string data;
         Element *next;
     };
 
-    Element **hashData;
-    HashFunction *hashFunction;
-    int storedData;         // сколько слов хранится
-    int usedValues;        // занятых ячеек
-    List *maxList;        // значения ключей у максимальных цепей
-    int maxListNumber;   // максимальная длина цепочки
-
     void deleteHashData();
 
-    void hashing(UserString &word);
+    void hashing(std::string word);
 
     void refreshMaxInf();
-
-    void countMaxInf();
 
     void printHashTable(fstream &fout);
 
@@ -50,29 +42,58 @@ public:
 
     void refreshHashData();
 
+    void setFunction();
+
     void setFunction(HashFunction *newFunction);
 
     void reHash();
 
-    unsigned int findValue(UserString &word);
+    unsigned int findValue(std::string word);
+
+    int getMaxListNumber()
+    {
+        return maxListNumber;
+    }
+
+    int getUsedValues()
+    {
+        return usedValues;
+    }
+
+    int getStoredData()
+    {
+        return storedData;
+    }
+
+    int getHashBase()
+    {
+        return hashFunction->hashBase;
+    }
+
+protected:
+
+    Element **hashData;
+    HashFunction *hashFunction;
+    int storedData;         // сколько слов хранится
+    int usedValues;        // занятых ячеек
+    List *maxList;        // значения ключей у максимальных цепей
+    int maxListNumber;   // максимальная длина цепочки
+
 private:
-//    static int standartFunction(UserString &string);
 
     class StandartHashFunction : public HashFunction
     {
     public:
         StandartHashFunction()
         {
-            hashBase =  1000;
+            hashBase = 1000;
         }
-        int hash(UserString &string)
+        int hash(std::string string)
         {
             int hashCode = 0;
-            UserSymbol **tmp = &string.first;
-            for (int i = 0; i < string.length; i++)
+            for (int i = 0; string[i] != '\0'; i++)
             {
-                hashCode = (hashCode + 17 * ((int)((*tmp)->symbol))) % hashBase;
-                tmp = &((*tmp)->next);
+                hashCode = (hashCode + 17 * static_cast<int>(string[i])) % hashBase;
             }
             return hashCode;
         }

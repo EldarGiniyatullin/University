@@ -1,7 +1,6 @@
 #include "hashfunction.h"
 #include "hashtable.h"
 #include "list.h"
-#include "userstring.h"
 #include <iostream>
 #include <iomanip>
 
@@ -33,7 +32,6 @@ HashTable::~HashTable()
         while (hashData[i] != nullptr)
         {
             Element *tmp = hashData[i]->next;
-            deleteString(hashData[i]->string);
             delete  hashData[i];
             hashData[i] = tmp;
         }
@@ -60,6 +58,14 @@ void HashTable::refreshHashData()
     storedData = 0;
 }
 
+void HashTable::setFunction()
+{
+    oldHashBase = hashFunction->hashBase;
+    delete hashFunction;
+    hashFunction = new StandartHashFunction;
+    reHash();
+}
+
 void HashTable::setFunction(HashFunction *newFunction)
 {
     oldHashBase = hashFunction->hashBase;
@@ -81,7 +87,7 @@ void HashTable::reHash()
             while (tempData[i])
             {
                 tmp = tempData[i];
-                hashing(tempData[i]->string);
+                hashing(tempData[i]->data);
                 tempData[i] = tmp->next;
                 delete tmp;
             }
@@ -90,13 +96,13 @@ void HashTable::reHash()
     delete tempData;
 }
 
-unsigned int HashTable::findValue(UserString &word)
+unsigned int HashTable::findValue(std::string word)
 {
     unsigned int value = hashFunction->hash(word);
     Element *tmp = hashData[value];
     while (tmp)
     {
-        if (areEqual(word, tmp->string))
+        if (word == tmp->data)
         {
             return value;
             break;
@@ -115,13 +121,13 @@ void HashTable::zeroHashData()
     }
 }
 
-void HashTable::hashing(UserString &word)
+void HashTable::hashing(std::string word)
 {
     int hashValue = hashFunction->hash(word);
     Element **tmp = &(hashData[hashValue]);
     while (*tmp)
     {
-        if (areEqual(word, (*tmp)->string))
+        if (word == (*tmp)->data)
         {
             (*tmp)->number++;
             break;
@@ -133,7 +139,7 @@ void HashTable::hashing(UserString &word)
         Element *newEl = new Element;
         *tmp = newEl;
         newEl->number = 1;
-        newEl->string = clone(word);
+        newEl->data = word;
         newEl->next = nullptr;
     }
     tmp = nullptr;
@@ -148,7 +154,7 @@ void HashTable::printHashTable(std::fstream &fout)
             Element *tmp =  hashData[i];
             while (tmp)
             {
-                printString(tmp->string, fout);
+                fout << tmp->data << " ";
                 fout << "(" << tmp->number << ") ";
                 tmp = tmp->next;
             }
@@ -201,9 +207,7 @@ void HashTable::printHashDataInf(std::fstream &fout)
         Element *curr =  hashData[max->value];
         while (curr)
         {
-            fout << " ";
-            printString(curr->string, fout);
-            fout << " ";
+            fout << " " <<  curr->data << " ";
             curr = curr->next;
         }
         max = max->next;
@@ -217,17 +221,16 @@ void HashTable::printHashDataInf(std::fstream &fout)
 void HashTable::clearData()
 {
     for (int i = 0; i < hashFunction->hashBase; i++)
-        delete hashData[i];
-}
-
-/*int HashTable::standartFunction(UserString &string)
-{
-    int hashCode = 0;
-    UserSymbol **tmp = &string.first;
-    for (int i = 0; i < string.length; i++)
     {
-        hashCode = (hashCode + 31 * ((int)((*tmp)->symbol))) % 1000;
-        tmp = &((*tmp)->next);
+        if (hashData[i])
+        {
+            while (!hashData[i])
+            {
+                Element *tmp = hashData[i];
+                hashData[i] = hashData[i]->next;
+                delete tmp;
+            }
+            hashData[i] = nullptr;
+        }
     }
-    return hashCode;
-}*/
+}
