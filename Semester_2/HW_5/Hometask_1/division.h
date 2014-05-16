@@ -19,6 +19,7 @@ public:
         if (tmp == 0)
         {
             throw DivisionByZero();
+            return 0;
         }
         else
             return left->result() / right->result();

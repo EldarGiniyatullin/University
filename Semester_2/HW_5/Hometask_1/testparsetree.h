@@ -27,57 +27,8 @@ private slots:
 
     void testEmptyTree()
     {
-        bool test = false;
-        try
-        {
-            testTree->calculate();
-        }
-        catch (ParseTree::NoParsedExpression &)
-        {
-            test = true;
-        }
-        QVERIFY(test);
-    }
-
-    void testNotEmptyTree()
-    {
-        fin.open("testparsetree1.txt", ios_base::in);
-        testTree->parseExpression(fin);
-        bool empty = false;
-        bool error = false;
-        try
-        {
-            double value = testTree->calculate();
-        }
-        catch (ParseTree::NoParsedExpression &)
-        {
-            empty = true;
-        }
-        catch (Division::DivisionByZero &)
-        {
-            error = true;
-        }
-        QVERIFY(!empty && error);
-        testTree->clearTree();
-        fin.close();
-    }
-
-    void testClearTree()
-    {
-        fin.open("testparsetree3.txt", ios_base::in);
-        testTree->parseExpression(fin);
-        testTree->clearTree();
-        bool empty = false;
-        try
-        {
-            double value = testTree->calculate();
-        }
-        catch (ParseTree::NoParsedExpression &)
-        {
-            empty = true;
-        }
-        QVERIFY(empty);
-        fin.close();
+        double test = testTree->calculate();
+        QVERIFY(test == 0);
     }
 
     void testVerifyResult()
@@ -91,15 +42,11 @@ private slots:
         {
             value = testTree->calculate();
         }
-        catch (ParseTree::NoParsedExpression &)
-        {
-            empty = true;
-        }
         catch (Division::DivisionByZero &)
         {
             error = true;
         }
-        QVERIFY(!empty && !error && (value == 322));
+        QVERIFY(value == 322);
         testTree->clearTree();
         fin.close();
     }

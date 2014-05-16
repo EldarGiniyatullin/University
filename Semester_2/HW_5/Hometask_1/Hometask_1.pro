@@ -2,6 +2,7 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG += testcore
+CONFIG += concole c++11
 
 QT += core
 QT +=testlib

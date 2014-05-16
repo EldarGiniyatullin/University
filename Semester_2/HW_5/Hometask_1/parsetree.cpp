@@ -42,12 +42,7 @@ OperatorClass *ParseTree::returnOperatorClass(char symbol)
 
 double ParseTree::calculate()
 {
-    if (!head)
-    {
-        throw NoParsedExpression();
-        return 0;
-    }
-    return head->calculate();
+    return (!head) ? 0 : head->calculate();
 }
 
 void ParseTree::parseExpression(std::ifstream &fin)

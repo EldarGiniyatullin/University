@@ -13,7 +13,7 @@ public:
      */
     Addition()
     {
-        operatorSymbol = '+';
+         operatorSymbol = '+';
     }
 
     double result()

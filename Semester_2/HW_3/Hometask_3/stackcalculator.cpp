@@ -11,7 +11,7 @@ StackCalculator::StackCalculator()
     convertedExpression = new DoublyLinkedList();
     isOperatorLast = true;
     isExpressionConverted = false;
-    isCorrect = true;
+    isCorrect = false;
     result = 0;
     expInString = "";
 }
@@ -23,54 +23,16 @@ StackCalculator::~StackCalculator()
     delete convertedExpression;
 }
 
-
-void StackCalculator::readOriginalExpression()
-{
-    char symbol = '\0';
-    cin.get(symbol);
-    while (!isOtherSymbol(symbol))
-    {
-        if (isBreak(symbol))
-        {
-            originalExpression->addElement(symbol);
-            if (symbol == '(')
-                isOperatorLast = true;
-        }
-        else if (isOperator(symbol))
-        {
-            if (isOperatorLast)
-            {                                       // for 5+(-25)
-                if (symbol == '+' || symbol == '-')
-                {
-                    cin.putback(symbol);
-                    readingNumber();
-                }
-                else                                // for 5+(/25)
-                    incorrectExpression();
-            }
-            else
-            {
-                originalExpression->addElement(symbol);
-                isOperatorLast = true;
-            }
-        }
-        else if (isOperand(symbol))
-        {
-            cin.putback(symbol);
-            readingNumber();
-        }
-        cin.get(symbol);
-    }
-    if (isOperatorLast)
-        incorrectExpression();
-}
-
 void StackCalculator::reversePolishNotation()
 {
+    delete operators;
+    operators = new LinkedStack;
     if (isCorrect)
     {
+        delete convertedExpression;
+        convertedExpression = new DoublyLinkedList;
         DoublyLinkedList::Element *tmp;
-        while (originalExpression->head)
+        while (originalExpression->head && isCorrect)
         {
             tmp = originalExpression->head;
             originalExpression->head = originalExpression->head->next;
@@ -90,14 +52,14 @@ void StackCalculator::reversePolishNotation()
                             convertedExpression->addElement(operators->head->Data.symbol);
                             operators->pop();
                         }
-                        if (operators->head->Data.symbol == '(')
-                        {
-                            operators->pop();
-                        }
-                        else
+                        if (!operators->head || operators->head->Data.symbol != '(')
                         {
                             incorrectExpression();
                             break;
+                        }
+                        else
+                        {
+                            operators->pop();
                         }
                     }
                 }
@@ -136,6 +98,13 @@ void StackCalculator::reversePolishNotation()
             operators->pop();
         }
     }
+    if (!isCorrect)
+    {
+        delete convertedExpression;
+        convertedExpression = new DoublyLinkedList;
+    }
+    delete operators;
+    operators = new LinkedStack;
 }
 
 double StackCalculator::calculateReversePolishNotation()
@@ -144,24 +113,34 @@ double StackCalculator::calculateReversePolishNotation()
     {
         double firstNumber, secondNumber = 0;
         while (convertedExpression->head && isCorrect)
-
         {
             while (convertedExpression->head && !convertedExpression->head->isSymbol)
             {
                 operators->push(convertedExpression->head->Data.number);
                 convertedExpression->deleteElement(1);
             }
-            if (!convertedExpression->head && operators->head)
+            if (!convertedExpression->head && operators->head && operators->head->isSymbol)
             {
                 incorrectExpression();
-                break;
+                return 0;
             }
             if (!correctnessCheck())
-                break;
+                return 0;
             secondNumber = operators->head->Data.number;
             operators->pop();
-            if (!correctnessCheck())
-                break;
+            if (!operators->head)
+            {
+                if (!convertedExpression->head)
+                {
+                     result = secondNumber;
+                    return result;
+                }
+                else
+                {
+                    incorrectExpression();
+                    return 0;
+                }
+            }
             firstNumber = operators->head->Data.number;
             operators->pop();
             firstNumber = calculate(firstNumber, secondNumber, convertedExpression->head->Data.symbol);
@@ -171,14 +150,40 @@ double StackCalculator::calculateReversePolishNotation()
         if (isCorrect)
         {
             result = operators->head->Data.number;
+            return result;
         }
     }
 }
 
-void StackCalculator::printResult()
+bool StackCalculator::isExpressionCorrect()
 {
+    return isCorrect;
+}
+
+double StackCalculator::calculateExpression(QString expression)
+{
+    double tmp;
+    isCorrect = true;
+    expInString = expression;
+    delete originalExpression;
+    originalExpression = new DoublyLinkedList;
+    readExpressionFromString();
     if (isCorrect)
-        cout << result;
+        reversePolishNotation();
+    if (isCorrect)
+        tmp = calculateReversePolishNotation();
+    if (!isCorrect)
+    {
+        isOperatorLast = true;
+        expInString = "";
+        delete convertedExpression;
+        convertedExpression = new DoublyLinkedList;
+        return 0;
+    }
+    else
+    {
+        return tmp;
+    }
 }
 
 bool StackCalculator::isOtherSymbol(char symbol)
@@ -203,7 +208,8 @@ bool StackCalculator::isBreak(char symbol)
 
 void StackCalculator::incorrectExpression()
 {
-    cout << "\nIncorrect expression";
+    cout << "\nIncorrect expression\n";
+    isOperatorLast = true;
     isCorrect = false;
 }
 
@@ -212,10 +218,14 @@ unsigned char StackCalculator::orderOfOperator(char symbolOfOperator)
     switch (symbolOfOperator)
     {
     case '+':
+        return 1;
+        break;
     case '-':
         return 1;
         break;
     case '/':
+        return 2;
+        break;
     case '*':
         return 2;
         break;
@@ -253,14 +263,28 @@ void StackCalculator::readingNumberFromString(int &symbol)
 {
     QString tempNumber = "";
     bool isDot = false;
-    while (symbol <= expInString.length() && ((expInString[symbol] <= '9' && expInString[symbol] >= '0') || expInString[symbol] == '.'))
+    char tmp = expInString.toStdString()[symbol];
+    if (tmp == '+' || tmp == '-')
     {
-        if (expInString[symbol] == '.')
-            if (isDot)
+        tempNumber = tempNumber + expInString[symbol++];
+        tmp = expInString.toStdString()[symbol];
+    }
+    while (symbol < expInString.length() && ((tmp <= '9' && tmp >= '0') || tmp == '.'))
+    {
+        if (tmp == '.')
+            if (isDot && tempNumber == "")
+            {
                 incorrectExpression();
+                break;
+            }
             else
                 isDot = true;
         tempNumber = tempNumber + expInString[symbol++];
+        tmp = expInString.toStdString()[symbol];
+    }
+    if (tempNumber == "")
+    {
+        incorrectExpression();
     }
     if (isCorrect)
     {
@@ -274,44 +298,53 @@ void StackCalculator::readingNumberFromString(int &symbol)
 
 void StackCalculator::readExpressionFromString()
 {
-    if (expInString != "")
+    int curr = 0;
+    isOperatorLast = true;
+    isCorrect = true;
+    char symbol = expInString.toStdString()[curr];
+    while (curr < expInString.length() && isCorrect)
     {
-        int i = 0;
-        char tmpSymbol  = expInString.toUtf8().data()[i];
-        while (i <= expInString.length() && !isOtherSymbol(tmpSymbol))
+        symbol = expInString.toStdString()[curr];
+        if (isBreak(symbol))
         {
-                tmpSymbol  = expInString.toUtf8().data()[i];
-                if (isBreak(tmpSymbol))
-                {
-                    originalExpression->addElement(tmpSymbol);
-                    if (tmpSymbol == '(')
-                        isOperatorLast = true;
-                }
-                else if (isOperator(tmpSymbol))
-                {
-                    if (isOperatorLast)
-                    {                                       // for 5+(-25)
-                        if (tmpSymbol == '+' || tmpSymbol == '-')
-                        {
-                            readingNumberFromString(i);
-                        }
-                        else                                // for 5+(/25)
-                            incorrectExpression();
-                    }
-                    else
-                    {
-                        originalExpression->addElement(tmpSymbol);
-                        isOperatorLast = true;
-                    }
-                }
-                else if (isOperand(tmpSymbol))
-                {
-                    readingNumberFromString(i);
-                    isOperatorLast = false;
-                }
-                i++;
+            if ((symbol == '(' && isOperatorLast) || (symbol == ')' && !isOperatorLast))
+                originalExpression->addElement(symbol);
+            else
+                incorrectExpression();
+            if (symbol == '(')
+                isOperatorLast = true;
         }
+        else if (isOperator(symbol))
+        {
+            if (isOperatorLast)
+            {                                       // for 5+(-25)
+                if (symbol == '+' || symbol == '-')
+                {
+                    readingNumberFromString(curr);
+                    if (isCorrect)
+                        isOperatorLast = false;
+                }
+                else
+                    incorrectExpression();
+            }
+            else
+            {
+                originalExpression->addElement(symbol);
+                isOperatorLast = true;
+            }
+        }
+        else if (isOperand(symbol))
+        {
+            readingNumberFromString(curr);
+            if (isCorrect)
+                isOperatorLast = false;
+            else
+                incorrectExpression();
+        }
+        curr++;
     }
+    if (isOperatorLast)
+        incorrectExpression();
 }
 
 void StackCalculator::readingNumber()

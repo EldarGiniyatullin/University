@@ -10,21 +10,25 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Hometask_3
 TEMPLATE = app
+CONFIG += testcore
+
+QT += core
+QT += testlib
 
 QMAKE_CXXFLAGS += -std=c++0x
 
-SOURCES +=\
+SOURCES += main.cpp\
         ubercalculator.cpp \
     stackcalculator.cpp \
     linkedstack.cpp \
     doublylinkedlist.cpp \
-    Hometask_3.cpp
 
 HEADERS  += ubercalculator.h \
     stackcalculator.h \
     stack.h \
     list.h \
     linkedstack.h \
-    doublylinkedlist.h
+    doublylinkedlist.h \
+    teststackcalculator.h
 
 FORMS    += ubercalculator.ui

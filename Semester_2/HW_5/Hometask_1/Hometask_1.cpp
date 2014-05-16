@@ -28,10 +28,6 @@ int main()
     {
         fout << a->calculate();
     }
-    catch (ParseTree::NoParsedExpression &)
-    {
-        cout << "\nAn expression is not parsed yet\n";
-    }
     catch (Division::DivisionByZero &)
     {
         cout << "\nDivision by zero!\n";

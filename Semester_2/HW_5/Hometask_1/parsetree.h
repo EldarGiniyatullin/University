@@ -44,8 +44,6 @@ public:
      */
     double calculate();
 
-    class NoParsedExpression{};
-
     void clearTree()
     {
         delete head;

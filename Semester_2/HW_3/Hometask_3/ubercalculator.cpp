@@ -85,7 +85,7 @@ void UberCalculator::resultButtonPressed()
     calculator->readExpressionFromString();
     calculator->reversePolishNotation();
     calculator->calculateReversePolishNotation();
-    if (calculator->isCorrect)
+    if (calculator->isExpressionCorrect())
         ui->expressionPanel->setText(QString::number(calculator->result));
     else
         ui->expressionPanel->setText("0");

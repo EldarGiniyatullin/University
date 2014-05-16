@@ -27,10 +27,6 @@ public:
     StackCalculator();
     ~StackCalculator();
     /**
-     * @brief readOriginalExpression reads expression from string-variable
-     */
-    void readOriginalExpression();
-    /**
      * @brief reversePolishNotation converts the expression added to StackCalculator::originalExpression
      * to RPN if needed and adds it to StackCalculator::convertedExpression
      */
@@ -49,14 +45,22 @@ public:
      * @brief result is the result of calculated expression
      */
     double result;
+    /**
+     * @brief expInString contains expression
+     */
     QString expInString;
+    class IncorrectExpression{};
+    bool isExpressionCorrect();
+    double calculateExpression(QString expression);
+    /**
+     * @brief readExpressionFromString builds originalExpression from expInString
+     */
+    void readExpressionFromString();
+protected:
     /**
      * @brief isCorrect is false if expression's incorrectness revealed
      */
     bool isCorrect;
-    void readExpressionFromString();
-    void printResult();
-protected:
     /**
      * @brief isOperatorLast equals true if the previous processed symbol in StackCalculator::reversePolishNotation()
      * was the symbol of binary operator or "("
@@ -109,8 +113,11 @@ protected:
      * @return the result of operation
      */
     double calculate(double firstNumber, double secondNumber, char operationSign);
+private:/**
+     * @brief readingNumberFromString reads double number from QString-variable
+     * @param symbol - first symbol in expInString to read number from
+     */
     void readingNumberFromString(int &symbol);
-private:
     /**
      * @brief readingNumber reads number from the console
      */
