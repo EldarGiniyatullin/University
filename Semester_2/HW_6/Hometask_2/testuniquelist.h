@@ -2,11 +2,7 @@
 
 #include <QtCore/QObject>
 #include <QtTest/QtTest>
-#include <iostream>
 #include "uniquelist.h"
-
-using std::ifstream;
-using std::ios_base;
 
 class TestUniqueList : public QObject
 {
