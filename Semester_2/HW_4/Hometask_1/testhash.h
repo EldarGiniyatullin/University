@@ -16,7 +16,7 @@ private:
     HashTable *testHash;
 
 private slots:
-    void initTestCase()
+    void init()
     {
         testHash = new HashTable;
     }
@@ -156,7 +156,7 @@ private slots:
         testHash->clearData();
     }
 
-    void cleanupTestCase()
+    void cleanup()
     {
         delete testHash;
     }
