@@ -15,7 +15,7 @@ private:
     UniqueList<int> *testUniqueList;
 
 private slots:
-    void initTestCase()
+    void init()
     {
         testUniqueList = new UniqueList<int>;
     }
@@ -55,7 +55,7 @@ private slots:
         testUniqueList->deleteValue(5);
     }
 
-    void cleanupTestCase()
+    void cleanup()
     {
         delete testUniqueList;
     }
