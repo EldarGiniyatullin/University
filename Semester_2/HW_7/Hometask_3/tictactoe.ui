@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>257</width>
-    <height>301</height>
+    <width>369</width>
+    <height>371</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>TicTacToe</string>
@@ -17,7 +29,7 @@
    <widget class="QSpinBox" name="sizeSpinBox">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>50</x>
       <y>0</y>
       <width>42</width>
       <height>22</height>
@@ -27,19 +39,33 @@
      <number>3</number>
     </property>
     <property name="maximum">
-     <number>20</number>
+     <number>10</number>
     </property>
    </widget>
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>30</y>
-      <width>251</width>
-      <height>201</height>
+      <y>0</y>
+      <width>51</width>
+      <height>22</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="buttonsLayout"/>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="text">
+     <string>Size:</string>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Normal</enum>
+    </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -47,7 +73,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>257</width>
+     <width>369</width>
      <height>26</height>
     </rect>
    </property>
