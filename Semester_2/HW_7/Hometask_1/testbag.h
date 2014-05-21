@@ -21,7 +21,7 @@ private:
     Bag<int> *testSet2;
 
 private slots:
-    void initTestCase()
+    void init()
     {
         testSet = new Bag<int>;
         testSet1 = new Bag<int>;
@@ -144,7 +144,7 @@ private slots:
         QVERIFY(tmp && (testSet2->getSize() == 6));
     }
 
-    void cleanupTestCase()
+    void cleanup()
     {
         delete testSet;
         delete testSet1;
