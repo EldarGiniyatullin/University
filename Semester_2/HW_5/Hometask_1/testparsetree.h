@@ -20,7 +20,7 @@ private:
     ifstream fin;
 
 private slots:
-    void initTestCase()
+    void init()
     {
         testTree = new ParseTree;
     }
@@ -65,7 +65,7 @@ private slots:
         fin.close();
     }
 
-    void cleanupTestCase()
+    void cleanup()
     {
         delete testTree;
     }
