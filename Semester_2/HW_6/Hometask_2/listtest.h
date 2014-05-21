@@ -15,7 +15,7 @@ private:
     DoublyLinkedList<int> *testDoublyLinkedList;
 
 private slots:
-    void initTestCase()
+    void init()
     {
         testDoublyLinkedList = new DoublyLinkedList<int>;
     }
@@ -52,7 +52,7 @@ private slots:
         QVERIFY(testDoublyLinkedList->numberOfElements == 1);
     }
 
-    void cleanupTestCase()
+    void cleanup()
     {
         delete testDoublyLinkedList;
     }
