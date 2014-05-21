@@ -16,7 +16,7 @@ private:
     StackCalculator *testCalc;
 
 private slots:
-    void initTestCase()
+    void init()
     {
         testCalc = new StackCalculator;
     }
@@ -141,7 +141,7 @@ private slots:
         QVERIFY(value == -6);
     }
 
-    void cleanupTestCase()
+    void cleanup()
     {
         delete testCalc;
     }
