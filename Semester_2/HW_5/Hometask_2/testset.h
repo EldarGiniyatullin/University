@@ -21,7 +21,7 @@ private:
     Set<int> *testSet2;
 
 private slots:
-    void initTestCase()
+    void init()
     {
         testSet = new Set<int>;
         testSet1 = new Set<int>;
@@ -126,7 +126,7 @@ private slots:
         testSet1 = new Set<int>;
     }
 
-    void cleanupTestCase()
+    void cleanup()
     {
         delete testSet;
         delete testSet1;
