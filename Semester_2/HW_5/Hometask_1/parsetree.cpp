@@ -47,6 +47,7 @@ double ParseTree::calculate()
 
 void ParseTree::parseExpression(std::ifstream &fin)
 {
+    clearTree();
     try
     {
         head = buildTree(fin);
