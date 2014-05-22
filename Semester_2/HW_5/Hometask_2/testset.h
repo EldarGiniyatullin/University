@@ -130,6 +130,5 @@ private slots:
     {
         delete testSet;
         delete testSet1;
-        delete testSet2;
     }
 };

@@ -18,44 +18,9 @@ public:
 
     unsigned int getSize();
 
-//    T *toArray();
+    Set<T> *operator +(Set<T> &second);
 
-    friend Set<T> *operator +(Set<T> &first, Set<T> &second)
-    {
-        Set<T> *tmp = new Set<T>;
-        if (!first.data->isEmpty())
-        {
-            for (int i = 0; i < first.data->size(); i++)
-            {
-                tmp->addValue(first.data->at(i));
-            }
-        }
-        if (!second.data->isEmpty())
-        {
-            for (int i = 0; i < second.data->size(); i++)
-            {
-                if (!tmp->doesSetContain(second.data->at(i)))
-                    tmp->addValue(second.data->at(i));
-            }
-        }
-        return tmp;
-    }
-
-    friend Set<T> *operator *(Set<T> &first, Set<T> &second)
-    {
-        if (first.getSize() == 0 || second.getSize() == 0)
-            return new Set<T>;
-
-        Set *tmp = new Set<T>;
-        for (int i = 0; i < first.data->size(); i++)
-        {
-            if (second.doesSetContain(first.data->at(i)))
-            {
-                tmp->addValue(first.data->at(i));
-            }
-        }
-        return tmp;
-    }
+    Set<T> *operator *(Set<T> &second);
 
 protected:
     QList<T> *data;
@@ -65,10 +30,8 @@ protected:
 
 
 template <typename T>
-Set<T>::Set()
+Set<T>::Set() : data(new QList<T>), size(0)
 {
-    data = new QList<T>;
-    size = 0;
 }
 
 template <typename T>
@@ -109,25 +72,41 @@ unsigned int Set<T>::getSize()
     return size;
 }
 
-//T *Set<T>::toArray()
-//{
-//    if (!data->isEmpty())
-//    {
-//        T* tmp = new T[size];
-//        for (int i = 0; i < data->size(); i++)
-//        {
-//            tmp[i] = data[i];
-//        }
-//        return tmp;
-//    }
-//    else
-//        return nullptr;
-//}
+template <typename T>
+Set<T> *Set<T>::operator +(Set<T> &second)
+{
+    Set<T> *tmp = new Set<T>;
+    if (!data->isEmpty())
+    {
+        for (int i = 0; i < data->size(); i++)
+        {
+            tmp->addValue(data->at(i));
+        }
+    }
+    if (!second.data->isEmpty())
+    {
+        for (int i = 0; i < second.data->size(); i++)
+        {
+            if (!tmp->doesSetContain(second.data->at(i)))
+                tmp->addValue(second.data->at(i));
+        }
+    }
+    return tmp;
+}
 
-//template <typename T>
-//Set<T> &Set<T>::operator *(Set<T> &second)
+template <typename T>
+Set<T> *Set<T>::operator *(Set<T> &second)
+{
+    if (getSize() == 0 || second.getSize() == 0)
+        return new Set<T>;
 
-
-//template <typename T>
-//Set<T> &Set::operator +(Set<T> &second)eturn tmp;
-//}
+    Set *tmp = new Set<T>;
+    for (int i = 0; i < data->size(); i++)
+    {
+        if (second.doesSetContain(data->at(i)))
+        {
+            tmp->addValue(data->at(i));
+        }
+    }
+    return tmp;
+}
