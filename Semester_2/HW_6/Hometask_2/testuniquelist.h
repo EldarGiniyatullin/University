@@ -2,7 +2,11 @@
 
 #include <QtCore/QObject>
 #include <QtTest/QtTest>
+#include <iostream>
 #include "uniquelist.h"
+
+using std::ifstream;
+using std::ios_base;
 
 class TestUniqueList : public QObject
 {
@@ -15,7 +19,7 @@ private:
     UniqueList<int> *testUniqueList;
 
 private slots:
-    void init()
+    void initTestCase()
     {
         testUniqueList = new UniqueList<int>;
     }
@@ -55,7 +59,7 @@ private slots:
         testUniqueList->deleteValue(5);
     }
 
-    void cleanup()
+    void cleanupTestCase()
     {
         delete testUniqueList;
     }

@@ -6,18 +6,17 @@
 using std::cout;
 
 template <typename T>
-class UniqueList
+class UniqueList : public DoublyLinkedList<T>
 {
 public:
     UniqueList()
     {
-        data = new DoublyLinkedList<T>;
+        DoublyLinkedList<T>();
         size = 0;
     }
 
     ~UniqueList()
     {
-        delete data;
     }
 
     void addValue(T value);
@@ -59,8 +58,6 @@ public:
 
 private:
     unsigned int size;
-
-    DoublyLinkedList<T> *data;
 };
 
 
@@ -70,7 +67,7 @@ void UniqueList<T>::addValue(T value)
 {
     if (!doesContain(value))
     {
-        data->addElement(value);
+        this->addElement(value);
         size++;
     }
     else
@@ -80,15 +77,15 @@ void UniqueList<T>::addValue(T value)
 template <typename T>
 bool UniqueList<T>::doesContain(T value)
 {
-    return data->doesListContain(value);
+    return this->doesListContain(value);
 }
 
 template <typename T>
 void UniqueList<T>::deleteValue(T value)
 {
-    if (doesContain(value))
+    if (this->doesListContain(value))
     {
-        data->deleteElement(value);
+        this->deleteElement(value);
         size--;
     }
     else

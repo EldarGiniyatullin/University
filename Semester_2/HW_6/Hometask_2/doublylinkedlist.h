@@ -39,6 +39,7 @@ private:
          */
         Element *previous;
     };
+protected:
     /**
      * @brief head is pointer to list's first element
      */
@@ -52,6 +53,7 @@ private:
      * @detailed it needed for the addElement() function
      * @return an empty exemplar of list's element
      */
+private:
     Element *createElement()
     {
         Element *newEl = new Element;
