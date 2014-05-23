@@ -1,5 +1,5 @@
 #include <iostream>
-#include "doublylinkedList.h"
+#include "doublylinkedlist.h"
 
 using std::cin;
 using std::cout;
