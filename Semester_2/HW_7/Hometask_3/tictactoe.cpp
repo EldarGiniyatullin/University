@@ -58,61 +58,71 @@ void TicTacToe::buttonClicked(int i)
 
 bool TicTacToe::checkWin(QPushButton *tmp, unsigned int position)
 {
-    bool isWinner = true;
-    unsigned int tmp1 = position / fieldSize;
-    unsigned int tmp2 = position % fieldSize;
-    //row
-    for (int i = tmp1 * fieldSize; i < (tmp1 + 1) * fieldSize; i++)
+    unsigned int row = position / fieldSize;
+    unsigned int column = position % fieldSize;
+    if (checkRow(row, tmp))
+        return true;
+    if (checkColumn(column, tmp))
+        return true;
+    if (checkMainDiagonal(row, column, tmp))
+            return true;
+    return checkSeondariDiagonal(position, tmp);
+}
+
+bool TicTacToe::checkRow(unsigned int row, QPushButton *button)
+{
+    for (int i = row * fieldSize; i < (row + 1) * fieldSize; i++)
     {
-        if (gameButtons[i]->text() != tmp->text())
+        if (gameButtons[i]->text() != button->text())
         {
-            isWinner = false;
-            break;
+            return false;
         }
     }
-    if (isWinner)
-        return isWinner;
-    isWinner = true;
-    //column
-    for (int i = tmp2; i < sizeSqr; i += fieldSize)
+    return true;
+}
+
+bool TicTacToe::checkColumn(unsigned int column, QPushButton *button)
+{
+    for (int i = column; i < sizeSqr; i += fieldSize)
     {
-        if (gameButtons[i]->text() != tmp->text())
+        if (gameButtons[i]->text() != button->text())
         {
-            isWinner = false;
-            break;
+            return false;
         }
     }
-    if (isWinner)
-        return isWinner;
-    isWinner = true;
-    if (tmp1 == tmp2)
+    return true;
+}
+
+bool TicTacToe::checkMainDiagonal(unsigned int row, unsigned int column, QPushButton *button)
+{
+    if (row == column)
     {
         for (int i = 0; i < sizeSqr; i = i + (fieldSize + 1))
         {
-            if (gameButtons[i]->text() != tmp->text())
+            if (gameButtons[i]->text() != button->text())
             {
-                isWinner = false;
-                break;
+                return false;
             }
         }
+        return true;
     }
-    if (isWinner && tmp1 == tmp2)
-        return isWinner;
-    isWinner = true;
+    else return false;
+}
+
+bool TicTacToe::checkSeondariDiagonal(unsigned int position, QPushButton *button)
+{
     if (position % (fieldSize - 1) == 0 && position != 0)
     {
         for (int i = fieldSize - 1; i < sizeSqr - 1; i = i + (fieldSize - 1))
         {
-            if (gameButtons[i]->text() != tmp->text())
+            if (gameButtons[i]->text() != button->text())
             {
-                isWinner = false;
-                break;
+                return false;
             }
         }
-        return isWinner;
+        return true;
     }
-    else
-        return false;
+    else return false;
 }
 
 void TicTacToe::buildLayout()

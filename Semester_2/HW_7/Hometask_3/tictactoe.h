@@ -44,6 +44,10 @@ private:
      * @return true, если есть победитель, иначе false
      */
     bool checkWin(QPushButton *tmp, unsigned int position);
+    bool checkRow(unsigned int row, QPushButton *button);
+    bool checkColumn(unsigned int tmp2, QPushButton *button);
+    bool checkMainDiagonal(unsigned int row, unsigned int column, QPushButton *button);
+    bool checkSeondariDiagonal(unsigned int position, QPushButton *button);
     QSignalMapper *signalMapper;
     unsigned int fieldSize;
     /**
