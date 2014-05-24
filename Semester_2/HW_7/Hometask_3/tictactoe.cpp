@@ -52,7 +52,7 @@ void TicTacToe::buttonClicked(int i)
         QMessageBox::information(this, "Draw", "Haha!");
         refreshButtons(fieldSize);
     }
-    isX = (isX ? false : true);
+    isX = !isX;
     ui->sizeSpinBox->setEnabled(true);
 }
 
