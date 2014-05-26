@@ -28,7 +28,7 @@ private slots:
 
     void correctEmptyExpression()
     {
-        testCalc->expInString = "";
+        testCalc->setExpression("");
         testCalc->readExpressionFromString();
         QVERIFY(!testCalc->isExpressionCorrect());
     }

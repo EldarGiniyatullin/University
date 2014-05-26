@@ -21,7 +21,7 @@
  * @detailed the algorithm of this calculator you can read here
  * http://ru.wikipedia.org/wiki/RPN
  */
-class StackCalculator: public LinkedStack, public DoublyLinkedList
+class StackCalculator
 {
 public:
     StackCalculator();
@@ -36,11 +36,17 @@ public:
      * @return the result of calculation
      */
     double calculateReversePolishNotation();
-    DoublyLinkedList *originalExpression;
+    class IncorrectExpression{};
+    bool isExpressionCorrect();
+    double calculateExpression(QString expression);
     /**
-     * @brief convertedExpression contains the expression after to-RPN-conversion
+     * @brief readExpressionFromString builds originalExpression from expInString
      */
-    DoublyLinkedList *convertedExpression;
+    void readExpressionFromString();
+    void setExpression(const QString &expression);
+    double getResult();
+
+protected:
     /**
      * @brief result is the result of calculated expression
      */
@@ -49,14 +55,11 @@ public:
      * @brief expInString contains expression
      */
     QString expInString;
-    class IncorrectExpression{};
-    bool isExpressionCorrect();
-    double calculateExpression(QString expression);
+    DoublyLinkedList *originalExpression;
     /**
-     * @brief readExpressionFromString builds originalExpression from expInString
+     * @brief convertedExpression contains the expression after to-RPN-conversion
      */
-    void readExpressionFromString();
-protected:
+    DoublyLinkedList *convertedExpression;
     /**
      * @brief isCorrect is false if expression's incorrectness revealed
      */

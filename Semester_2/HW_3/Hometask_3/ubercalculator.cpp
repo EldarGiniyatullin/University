@@ -81,12 +81,12 @@ UberCalculator::~UberCalculator()
 void UberCalculator::resultButtonPressed()
 {
     calculator = new StackCalculator();
-    calculator->expInString = ui->expressionPanel->text();
+    calculator->setExpression(ui->expressionPanel->text());
     calculator->readExpressionFromString();
     calculator->reversePolishNotation();
     calculator->calculateReversePolishNotation();
     if (calculator->isExpressionCorrect())
-        ui->expressionPanel->setText(QString::number(calculator->result));
+        ui->expressionPanel->setText(QString::number(calculator->getResult()));
     else
         ui->expressionPanel->setText("0");
     delete calculator;

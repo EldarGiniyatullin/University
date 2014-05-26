@@ -347,6 +347,16 @@ void StackCalculator::readExpressionFromString()
         incorrectExpression();
 }
 
+void StackCalculator::setExpression(const QString &expression)
+{
+    expInString = expression;
+}
+
+double StackCalculator::getResult()
+{
+    return result;
+}
+
 void StackCalculator::readingNumber()
 {
     double tempNumber = 0;

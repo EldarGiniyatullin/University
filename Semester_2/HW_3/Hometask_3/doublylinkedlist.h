@@ -20,6 +20,7 @@ public:
      * @brief printList prints list content to console
      */
     void printList();
+    friend class StackCalculator;
 protected:
     struct Element
     {
