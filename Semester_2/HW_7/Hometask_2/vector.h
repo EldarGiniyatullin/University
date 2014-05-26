@@ -20,7 +20,7 @@ public:
     /**
      * @brief constructor that sets i-param to vector's i-coordinate
      */
-    Vector(T coordinate1, T coordinate2, ...);
+    Vector(T array[]);
 
     /**
      * @return vector - result of first and second vectors' sum
@@ -69,15 +69,13 @@ Vector<T, dim>::Vector(const T &coordinate)
 }
 
 template <typename T, unsigned int dim>
-Vector<T, dim>::Vector(T coordinate1, T coordinate2, ...)
+Vector<T, dim>::Vector(T array[])
 {
-    T *curr = &coordinate1;
     dimension = dim;
     coordinates = new T[dim];
     for (int i = 0; i < dim; i++)
     {
-        coordinates[i] = *curr;
-        curr++;
+        coordinates[i] = array[i];
     }
 }
 
@@ -108,7 +106,8 @@ T Vector<T, dim>::operator *(const Vector<T, dim> &second)
 template <typename T, unsigned int dim>
 T Vector<T, dim>::getDimensionValue(unsigned int i)
 {
-    return coordinates[i];
+    if (i < dim)
+        return coordinates[i];
 }
 
 template <typename T, unsigned int dim>

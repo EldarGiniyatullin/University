@@ -16,7 +16,8 @@ private slots:
 
     void testVector1()
     {
-        Vector<int, 3> a (5, 6, 7);
+        int array[] = {5, 6, 7};
+        Vector<int, 3> a (array);
         QVERIFY(a.getDimensionValue(0) == 5 && a.getDimensionValue(1) == 6 && a.getDimensionValue(2) == 7);
     }
 
@@ -28,19 +29,22 @@ private slots:
 
     void testNullVector()
     {
-        Vector<int, 3> c (0, 0, 0);
+        int array[] = {0, 0, 0};
+        Vector<int, 3> c (array);
         QVERIFY(c.isNullVector());
     }
 
     void testNullVector1()
     {
-        Vector<int, 3> d (1, 0, 0);
+        int array[] = {1, 0, 0};
+        Vector<int, 3> d (array);
         QVERIFY(!d.isNullVector());
     }
 
     void testSum()
     {
-        Vector<int, 3> a (5, 7, -9);
+        int array[] = {5, 7, -9};
+        Vector<int, 3> a (array);
         Vector<int, 3> b (8);
         Vector<int, 3> c = a + b;
         QVERIFY(c.getDimensionValue(0) == 13 && c.getDimensionValue(1) == 15 && c.getDimensionValue(2) == -1);
@@ -48,14 +52,16 @@ private slots:
 
     void testScalarProduct()
     {
-        Vector<int, 3> a (5, 7, -9);
+        int array[] = {5, 7, -9};
+        Vector<int, 3> a (array);
         Vector<int, 3> b (8);
         QVERIFY(a * b == 24);
     }
 
     void testScalarProductNullVector()
     {
-        Vector<int, 4> a (5, 7, -9, 1);
+        int array[] = {5, 7, -9, 1};
+        Vector<int, 4> a (array);
         Vector<int, 4> b (0);
         QVERIFY(a * b == 0);
     }
