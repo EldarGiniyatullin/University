@@ -8,6 +8,7 @@ HashTable::HashTable()
 	hashtable = new List[capacity];
 }
 
+
 void HashTable::addToTable(int key)
 {
 	if (searchInTable(key))

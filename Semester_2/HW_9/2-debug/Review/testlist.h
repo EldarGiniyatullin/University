@@ -2,6 +2,7 @@
 #include <QtCore/QObject>
 #include <QtTest/QtTest>
 
+
 #include "list.h"
 
 class TestList : public QObject

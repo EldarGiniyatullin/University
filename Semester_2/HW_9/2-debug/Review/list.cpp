@@ -6,6 +6,7 @@ List::List(): next(NULL)
     lenght = 0;
 }
 
+
 List::List(int newValue)
 {
     value = newValue;

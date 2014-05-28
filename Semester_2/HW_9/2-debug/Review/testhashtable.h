@@ -3,6 +3,8 @@
 #include <QtTest/QtTest>
 #include "hashtable.h"
 
+
+
 class TestHashTable : public QObject
 {
     Q_OBJECT

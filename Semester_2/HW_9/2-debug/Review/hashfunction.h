@@ -9,6 +9,7 @@ public:
     virtual int hash(int key) = 0;
 };
 
+
 class HashFunction1 : public HashFunction
 {
     int hash(int key)
