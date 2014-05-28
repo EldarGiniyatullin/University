@@ -16,11 +16,11 @@ public:
       */
     void addToTable(int key);
     /**
-      удаление из таблицы
+      удаление из теблицы
       */
     void deleteFromTable(int key);
     /**
-      поиск в таблице
+      поиск в теблице
       возвращает 1 или 0
       */
     bool searchInTable(int key);
@@ -36,11 +36,6 @@ public:
       меняет хеш функцию
       */
     void setNewHashFunction(HashFunction *funHash);
-
-    class StandartFunction : public HashFunction
-    {
-        int hash(int key);
-    };
 
 private:
     List *hashtable;

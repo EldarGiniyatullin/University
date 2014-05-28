@@ -15,7 +15,10 @@ private slots:
     {
         listLinked = new List();
     }
-
+    void cleanup()
+    {
+        delete listLinked;
+    }
     void testAddToLinkedList()
     {
         listLinked->add(2);
@@ -35,13 +38,6 @@ private slots:
         QVERIFY(listLinked->search(2));
         QVERIFY(listLinked->search(4));
         QVERIFY(listLinked->search(5));
-        //
-        QVERIFY(!listLinked->search(1));
-    }
-
-    void cleanup()
-    {
-        delete listLinked;
     }
 private:
     List *listLinked;

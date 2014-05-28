@@ -33,8 +33,8 @@ public:
     */
     void showAll();
     /**
-    @brief функция удаления элемента из списка
-    @param valueDelete значение, которое из списка удалить нужно
+    @brief функция удаления элемента изх списка
+    @param valueDelete значение, котолрое из списка удалить нужно
     */
     void deleteFromList(int valueDelete);
     /**
@@ -47,7 +47,7 @@ public:
     int getValue();
     int getLenght()
     {
-        return length;
+        return lenght;
     }
     List * getNext()
     {
@@ -56,6 +56,6 @@ public:
 
 public:
     List *next;
-    int length;
+    int lenght;
     int value;
 };

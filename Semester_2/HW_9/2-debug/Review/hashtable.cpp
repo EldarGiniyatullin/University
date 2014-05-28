@@ -6,9 +6,6 @@ HashTable::HashTable()
 	size = 0;
 	loadfactor = 1;
 	hashtable = new List[capacity];
-    //изначально не инициализировалась хэш-функция
-    //для чего была создана стандартная
-    hashFunction = new StandartFunction;
 }
 
 void HashTable::addToTable(int key)
@@ -45,19 +42,14 @@ bool HashTable::searchInTable(int key)
 void HashTable::rehash(int capacityNew)
 {
 	List *temp = new List[capacityNew];
-    //инициализация пропущена
-    int hash = 1;
+	int hash;
 	for (int i = 0; i < capacity; i++)
 	{
 		List *tempList = &hashtable[i];
 		for (int j = 0; j < hashtable[i].getLenght(); j++)
 		{
 			hash = (hashFunction->hash(tempList->getValue())) % capacityNew;
-
-            //вот ошибка была
-            //было temp[hash].add(hashtable[i].getValue());
-            //исправлено
-            temp[hash].add(tempList->getValue());
+			temp[hash].add(hashtable[i].getValue());
 			tempList = tempList->getNext();
 		}
 	}
@@ -70,14 +62,11 @@ void HashTable::setNewHashFunction(HashFunction *funHash)
 	delete hashFunction;
 	hashFunction = funHash;
 
-    if (size == 0)
+	if (size != 0)
 	{
 		return;
 	}
-    //ну эта штука 0 даст со временем
-    //int capacityNew = capacity / (capacity / size);
-    //ниже исправление - как вариант
-    int capacityNew = size;
+	int capacityNew = capacity / (capacity / size);
 	rehash(capacityNew);
 }
 
@@ -98,10 +87,4 @@ void HashTable::statistic()
 	}
 	cout << "Size " << size << endl << "load factor " << (double)(size / capacity) << endl
 		 << "not empty cells " << hashElement << endl << "maximum lenght " << maxLenght << endl;
-}
-
-
-int HashTable::StandartFunction::hash(int key)
-{
-    return key % 21;
 }

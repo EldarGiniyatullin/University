@@ -3,16 +3,14 @@
 List::List(): next(NULL)
 {
     value = 0;
-    length = 0;
+    lenght = 0;
 }
 
 List::List(int newValue)
 {
     value = newValue;
     next = NULL;
-    //еще это по ногам стреляло
-    //length = 1;
-    length = 0;
+    lenght = 1;
 }
 
 void List::add(int newValue)
@@ -20,16 +18,12 @@ void List::add(int newValue)
     if (next == NULL)
     {
         next = new List (newValue);
-        length++;
+        lenght++;
     }
     else
     {
         next->add(newValue);
-        if (next->length == this->length)
-            this->length++;
     }
-    //вот корень зла
-    //изменение длины-то наверх не шло
 }
 bool List::search(int valueSearch)
 {
@@ -76,7 +70,7 @@ void List::deleteFromList(int valueDelete)
         temp2 = temp1->next;
         this->next = this->next->next;
         delete temp2;
-        length--;
+        lenght--;
         return;
     }
     temp1 = temp1->next;
@@ -88,14 +82,14 @@ void List::deleteFromList(int valueDelete)
     {
         temp2 = temp1->next;
         temp1->next = NULL;
-        length--;
+        lenght--;
         delete temp2;
     }
     else
     {
         temp2 = temp1->next;
         temp1->next = temp1->next->next;
-        length--;
+        lenght--;
         delete temp2;
     }
 }

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "testlist.h"
-#include "testhashtable.h"
+#include "testHashTable.h"
 using namespace std;
 
 int main()

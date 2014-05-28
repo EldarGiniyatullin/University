@@ -14,7 +14,10 @@ private slots:
     {
         hashTable = new HashTable();
     }
-
+    void cleanup()
+    {
+        delete hashTable;
+    }
     void testAddToHashTable()
     {
         hashTable->addToTable(33);
@@ -43,16 +46,6 @@ private slots:
         hashTable->addToTable(1);
         hashTable->addToTable(43);
         hashTable->addToTable(3);
-        //
-        QVERIFY(hashTable->searchInTable(33));
-        QVERIFY(hashTable->searchInTable(11));
-        QVERIFY(hashTable->searchInTable(9));
-        QVERIFY(hashTable->searchInTable(5));
-        QVERIFY(hashTable->searchInTable(43));
-        QVERIFY(hashTable->searchInTable(1));
-        QVERIFY(hashTable->searchInTable(3));
-        QVERIFY(!hashTable->searchInTable(86));
-        //
         hashFunction = new HashFunction2();
         hashTable->setNewHashFunction(hashFunction);
         QVERIFY(hashTable->searchInTable(33));
@@ -60,16 +53,8 @@ private slots:
         QVERIFY(hashTable->searchInTable(9));
         QVERIFY(hashTable->searchInTable(5));
         QVERIFY(hashTable->searchInTable(1));
-        //чудесным образом (виной хэш-функция) вместо 43 значение превращалось в 0
-        //QVERIFY(hashTable->searchInTable(0)); выдавал true
         QVERIFY(hashTable->searchInTable(43));
-        QVERIFY(!hashTable->searchInTable(86));
         QVERIFY(hashTable->searchInTable(3));
-    }
-
-    void cleanup()
-    {
-        delete hashTable;
     }
 
 private:
