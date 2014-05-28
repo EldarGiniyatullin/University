@@ -47,6 +47,8 @@ public:
         }
     };
 
+    ~HashTable();
+
 private:
     List *hashtable;
     int size;

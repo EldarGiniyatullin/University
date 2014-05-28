@@ -75,9 +75,15 @@ void HashTable::setNewHashFunction(HashFunction *funHash)
 	rehash(capacityNew);
 }
 
+HashTable::~HashTable()
+{
+    delete[] hashtable;
+    delete hashFunction;
+}
+
 void HashTable::statistic()
 {
-	int hashElement = 0;
+    int hashElement = 0;
 	int maxLenght = hashtable[0].getLenght();
 	for (int i = 0; i < capacity; i++)
 	{
