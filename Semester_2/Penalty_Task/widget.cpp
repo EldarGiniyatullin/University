@@ -5,7 +5,7 @@
 Widget::Widget(QWidget *parent) :
     QWidget(parent), tempPosition(0),
     personsLayout(new QGridLayout), numberOfPersons(0), squareSize(0), userToShow("EldarGiniyatullin"), manager(new QNetworkAccessManager), userLogin(""),
-    iter(0), userNameArray(new QString[1])
+    iter(0)
 {
     buildPersonData(userToShow, follow[0]);
 }
@@ -17,7 +17,7 @@ void Widget::showUserBar()
     personsLayout->addWidget(actionButton, 0, 2);
     connect(actionButton, SIGNAL(clicked()), this, SLOT(buildDataAfterButtonPressure()));
     personNameLineEdit = new QLineEdit(this);
-    personsLayout->addWidget(personNameLineEdit, 1, 0, 1, 5);
+    personsLayout->addWidget(personNameLineEdit, 1, 0, 1, 6);
     folderType = buildFolderType();
     personsLayout->addWidget(folderType, 0, 0);
     parseData();
@@ -38,7 +38,7 @@ void Widget::buildButton()
     personButton->setIcon(QIcon(image));
     personButton->setIconSize(personButton->size());
 
-    personsLayout->addWidget(personButton, 2 + (tempPosition) / squareSize, (tempPosition) % squareSize);
+    personsLayout->addWidget(personButton, 2 + (tempPosition) / (squareSize + 1), (tempPosition) % (squareSize + 1));
     tempPosition++;
     connect(personButton, SIGNAL(clicked()), this, SLOT(buildPersonDataFromButton()));
 }
@@ -82,8 +82,6 @@ void Widget::parseData()
     {
         numberOfPersons = jsonDoc.array().size();
         squareSize = static_cast<int>(round(sqrt(static_cast<double>(numberOfPersons))));
-        delete[] userNameArray;
-        userNameArray = new QString[numberOfPersons];
         parseCurrent();
         setLayout(personsLayout);
     }

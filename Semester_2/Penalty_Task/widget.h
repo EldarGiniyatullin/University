@@ -1,6 +1,4 @@
-#ifndef WIDGET_H
-#define WIDGET_H
-
+#pragma once
 
 #include <QCoreApplication>
 #include <QNetworkRequest>
@@ -41,43 +39,54 @@ public:
 private slots:
 
 
+    /**
+     * @brief showUserBar собирает рабочую панель
+     */
     void showUserBar();
 
+    /**
+     * @brief buildButton собирает кнопку-пользователя
+     */
     void buildButton();
 
+    /**
+     * @brief buildPersonDataFromButton - построение данных при их запросе с кнопки-пользователя
+     */
     void buildPersonDataFromButton();
 
     void parseData();
 
+    /**
+     * @brief parseCurrent парсит данные пользователя из списка
+     */
     void parseCurrent();
 
-//    void buildPersonDataFollowing();
-
-//    void buildPersonDataFollowers();
-
+    /**
+     * @brief buildDataAfterButtonPressure - потроение данных при нажатии кнопки "Show"
+     */
     void buildDataAfterButtonPressure();
 
 
 private:
 
-    QLabel statusLabel;
-
-
+    QGridLayout *personsLayout;
     QNetworkAccessManager *manager;
     QWebView *view;
 
-    QGridLayout *personsLayout;
     int tempPosition;
     QNetworkReply *reply;
 
     QString userToShow;
 
+    /**
+     * @brief numberOfPersons - количество пользователей в списке (github дает не более 30)
+     */
     int numberOfPersons;
     int squareSize;
+
     QStringList follow = (QStringList() << "followers" << "following");
     QString userLogin;
 
-    void buildPersonData(QString person, QString action);
 
     QJsonDocument jsonDoc;
 
@@ -85,21 +94,21 @@ private:
 
     int iter;
 
-    QComboBox *buildFolderType();
-
-    void doLater();
-
     QComboBox *folderType;
-
-    QString *userNameArray;
-
     QLineEdit *personNameLineEdit;
-
     QGridLayout *tempLayout;
-
     QPushButton *actionButton;
+
+    /**
+     * @brief buildPersonData - единый метод построения данных
+     * @param person - ник пользователя
+     * @param action - followers или following
+     */
+    void buildPersonData(QString person, QString action);
+
+    /**
+     * @brief buildFolderType - строит QComboBox с выбором папки
+     */
+    QComboBox *buildFolderType();
 };
 
-
-
-#endif // WIDGET_H

@@ -20,3 +20,6 @@ HEADERS  += \
     widget.h
 
 FORMS    += widget.ui
+
+OTHER_FILES += \
+    json.txt
