@@ -9,59 +9,43 @@ using namespace OS;
 using std::cin;
 using std::cout;
 
+/**
+ * @brief The LocalNet class имитирует работу локальной сети с несколькоим компьютерами в ней
+ */
 class LocalNet
 {
 public:
-    LocalNet(int numberOfPCs, OperatingSystem listOfOS[], int numberOfOS);
-//private:
+    LocalNet(int numberOfPCs);
+    ~LocalNet()
+    {
+    }
+    /**
+     * @brief check проверяет конкретный компьютер сети на наличие вируса
+     */
     void check(PersonalComputer &PC);
+    /**
+     * @brief connectWithAll соединяет конкретный компьютер с остальными компьютерами сети
+     */
     void connectWithAll(PersonalComputer &PC, int number);
-    QList<PersonalComputer> listOfPCs;
+    /**
+     * @brief work проводит "ходы" сети и выводит информацию о компьютерах
+     */
     void work();
+    void step();
+
+    friend class TestLocalNet;
+private:
+    /**
+     * @brief listOfPCs список компьютеров сети
+     */
+    QList<PersonalComputer> listOfPCs;
     unsigned int numberOfPCs;
 };
 
-LocalNet::LocalNet(int numberOfPCs, OperatingSystem listOfOS[], int numberOfOS)
-{
-    this->numberOfPCs = numberOfPCs;
-    for (int i = 0; i < this->numberOfPCs; i++)
-    {
-        listOfPCs.append(PersonalComputer(listOfOS[i % numberOfOS]));
-        listOfPCs[i].changeNumber(i);
-        if (i % numberOfOS == 0)
-            listOfPCs[i].infectPC();
-    }
-}
 
-void LocalNet::check(PersonalComputer &PC)
-{
-    if (PC.isInfected())
-        PC.changeOS(osList[rand() % osListSize]);
-}
 
-void LocalNet::connectWithAll(PersonalComputer &PC, int number)
-{
-    for (int i = number; i < numberOfPCs; i++)
-        PC.connectWithPC(listOfPCs[i]);
 
-}
 
-void LocalNet::work()
-{
-    char tmp = '\0';
-    while(true)
-    {
-        cout << "-----------------------------------------------------------\n";
-        for (int i = 0; i < this->numberOfPCs; i++)
-        {
-            cout <<  listOfPCs[i].getNumber() << " - " << listOfPCs[i].getCurrentOSName() << " - " << (listOfPCs[i].isInfected() ? "Infected" : "Not infected") << "\n";
-            check(listOfPCs[i]);
-            connectWithAll(listOfPCs[i], i);
-        }
-        cout << "Next step? Y/N\n";
-        cin >> tmp;
-        if (tmp == 'N')
-            break;
-    }
 
-}
+
+

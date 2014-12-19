@@ -1,26 +1,27 @@
 #pragma once
 
+
+#include <QString>
+
+
 namespace OS
 {
+/**
+ * @brief The OperatingSystem class имитирует операционную систему
+ */
 class OperatingSystem
 {
 public:
-    OperatingSystem(char* name, unsigned int chance)
+    OperatingSystem(QString name, unsigned int chance);
+    unsigned int getOSChanceToCatchVirus();
+    QString getOSName();
+    bool operator==(const OperatingSystem &b)
     {
-        this->osName = name;
-        this->chanceToCatchVirus = chance;
-    }
-    unsigned int getOSChanceToCatchVirus()
-    {
-        return chanceToCatchVirus;
-    }
-    char* getOSName()
-    {
-        return osName;
+        return (this->chanceToCatchVirus == b.chanceToCatchVirus && this->osName == b.osName ? true : false);
     }
 protected:
     unsigned int chanceToCatchVirus;
-    char* osName;
+    QString osName;
 };
 
 const OperatingSystem windows7("Windows7\0", 90);

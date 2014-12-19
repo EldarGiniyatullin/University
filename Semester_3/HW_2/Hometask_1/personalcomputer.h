@@ -6,56 +6,38 @@
 
 using namespace OS;
 
+/**
+ * @brief The PersonalComputer class имитирует ПК
+ */
 class PersonalComputer
 {
 public:
-    PersonalComputer(OperatingSystem OS) : currentOS(OS), isPCInfected(false) {}
+    PersonalComputer(OperatingSystem OS) : isPCInfected(false), currentOS(OS) {}
     ~PersonalComputer() {}
 //------------------------------------------------------------
-    void changeOS(OperatingSystem OS)
+    /**
+     * @brief changeOS меняет ОС, при этом уничтожая имеющиеся вирусы
+     */
+    void changeOS(OperatingSystem OS);
+    void connectWithPC(PersonalComputer otherPC);
+    QString getCurrentOSName();
+
+    OperatingSystem getOS()
     {
-        currentOS = OS;
-        isPCInfected = false;
-    }
-    void connectWithPC(PersonalComputer otherPC)
-    {
-        if (otherPC.isInfected())
-            this->tryToInfectPC();
-        else if ((!otherPC.isInfected()) && this->isInfected())
-            otherPC.tryToInfectPC();
-    }
-    char* getCurrentOSName()
-    {
-        return currentOS.getOSName();
+        return this->currentOS;
     }
     bool isInfected()
     {
         return isPCInfected;
     }
-    void infectPC()
-    {
-        this->isPCInfected = true;
-    }
-    void changeNumber(unsigned int newNumber)
-    {
-        this->numberOfPC = newNumber;
-    }
+    void infectPC();
 
-    unsigned int getNumber()
-    {
-        return numberOfPC;
-    }
 //-----------------------------------------------------------
 protected:
     bool isPCInfected;
 private:
     OperatingSystem currentOS;
-    unsigned int numberOfPC;
-    void tryToInfectPC()
-    {
-        srand(time(0));
-        this->isPCInfected = (((rand() * 71) % 100) < this->currentOS.getOSChanceToCatchVirus());
-    }
+    void tryToInfectPC();
 };
 
 

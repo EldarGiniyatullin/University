@@ -2,17 +2,16 @@
 #include "operatingsystem.h"
 #include "personalcomputer.h"
 #include "localnet.h"
+#include "testlocalnet.h"
 
 using namespace std;
-
 using namespace OS;
-
-OperatingSystem listOfOS[] = {windows7, windows8, linux, mac};
 
 int main()
 {
-    LocalNet net(30, listOfOS, 4);
+    TestLocalNet testNet;
+    QTest::qExec(&testNet);
+    LocalNet net(30);
     net.work();
-    system("pause");
     return 0;
 }
