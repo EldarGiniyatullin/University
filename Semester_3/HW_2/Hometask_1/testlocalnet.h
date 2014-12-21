@@ -6,9 +6,6 @@
 #include <QList>
 #include "localnet.h"
 
-using std::ifstream;
-using std::ios_base;
-
 class TestLocalNet : public QObject
 {
     Q_OBJECT
