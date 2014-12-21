@@ -9,13 +9,7 @@ void PersonalComputer::changeOS(OperatingSystem OS)
     isPCInfected = false;
 }
 
-void PersonalComputer::connectWithPC(PersonalComputer otherPC)
-{
-    if (otherPC.isInfected())
-        this->tryToInfectPC();
-    else if ((!otherPC.isInfected()) && this->isInfected())
-        otherPC.tryToInfectPC();
-}
+
 
 QString PersonalComputer::getCurrentOSName()
 {
@@ -25,10 +19,4 @@ QString PersonalComputer::getCurrentOSName()
 void PersonalComputer::infectPC()
 {
     this->isPCInfected = true;
-}
-
-void PersonalComputer::tryToInfectPC()
-{
-    srand(time(0));
-    this->isPCInfected = (((rand() * 71) % 100) < this->currentOS.getOSChanceToCatchVirus());
 }

@@ -1,18 +1,18 @@
 #include "operatingsystem.h"
 
 
-OS::OperatingSystem::OperatingSystem(QString name, unsigned int chance)
+OperatingSystem::OperatingSystem(QString name, unsigned int chance)
 {
     this->osName = name;
     this->chanceToCatchVirus = chance;
 }
 
-unsigned int OS::OperatingSystem::getOSChanceToCatchVirus()
+unsigned int OperatingSystem::getOSChanceToCatchVirus()
 {
     return chanceToCatchVirus;
 }
 
-QString OS::OperatingSystem::getOSName()
+QString OperatingSystem::getOSName()
 {
     return osName;
 }

@@ -5,13 +5,11 @@
 #include "testlocalnet.h"
 
 using namespace std;
-using namespace OS;
 
 int main()
 {
     TestLocalNet testNet;
     QTest::qExec(&testNet);
     LocalNet net(30);
-    net.work();
     return 0;
 }

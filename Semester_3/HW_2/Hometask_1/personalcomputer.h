@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include "operatingsystem.h"
 
-using namespace OS;
 
 /**
  * @brief The PersonalComputer class имитирует ПК
@@ -12,6 +11,7 @@ using namespace OS;
 class PersonalComputer
 {
 public:
+    PersonalComputer() : isPCInfected(false), currentOS(OperatingSystem("Windows7\0", 90)) {}
     PersonalComputer(OperatingSystem OS) : isPCInfected(false), currentOS(OS) {}
     ~PersonalComputer() {}
 //------------------------------------------------------------
@@ -19,9 +19,7 @@ public:
      * @brief changeOS меняет ОС, при этом уничтожая имеющиеся вирусы
      */
     void changeOS(OperatingSystem OS);
-    void connectWithPC(PersonalComputer otherPC);
     QString getCurrentOSName();
-
     OperatingSystem getOS()
     {
         return this->currentOS;
@@ -30,25 +28,13 @@ public:
     {
         return isPCInfected;
     }
+    /**
+     * @brief infectPC абсолютно заражает компьютер
+     */
     void infectPC();
 
 //-----------------------------------------------------------
-protected:
     bool isPCInfected;
 private:
     OperatingSystem currentOS;
-    void tryToInfectPC();
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
