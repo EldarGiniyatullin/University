@@ -90,6 +90,11 @@ public:
      */
     void step();
     friend class TestLocalNet;
+    unsigned int getNetSize()
+    {
+        return netSize;
+    }
+
 private:
     void netConnection(PersonalComputer &pc1, PersonalComputer &pc2);
     void initializeMatrix();

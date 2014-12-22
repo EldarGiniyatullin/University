@@ -41,10 +41,13 @@ void LocalNet::step()
         {
             if (matrix[i][j] && !areJustInfected[i] && !areJustInfected[j])
             {
-                int notInfected = (listOfPCs[i].isInfected() ? j : i);
-                netConnection(listOfPCs[j], listOfPCs[i]);
-                if (listOfPCs[notInfected].isInfected())
-                    areJustInfected[notInfected] = true;
+                if (!listOfPCs[i].isInfected() || !listOfPCs[j].isInfected())
+                {
+                    int notInfected = (listOfPCs[i].isInfected() ? j : i);
+                    netConnection(listOfPCs[j], listOfPCs[i]);
+                    if (listOfPCs[notInfected].isInfected())
+                        areJustInfected[notInfected] = true;
+                }
             }
         }
     }
