@@ -1,11 +1,11 @@
 checkOpenClose :: Char -> Char -> Bool
-checkOpenClose sym1 sym2 = if ((sym1 == '(' && sym2 == ')') || (sym1 == '{' && sym2 == '}') || (sym1 == '[' && sym2 == ']')) then True else False
+checkOpenClose sym1 sym2 = ((sym1 == '(' && sym2 == ')') || (sym1 == '{' && sym2 == '}') || (sym1 == '[' && sym2 == ']'))
 
 checkOpenBreak :: Char -> Bool
-checkOpenBreak symbol = if ((symbol == '(') || (symbol == '{') || (symbol == '[')) then True else False
+checkOpenBreak symbol = ((symbol == '(') || (symbol == '{') || (symbol == '[')) 
 
 checkCloseBreak :: Char -> Bool
-checkCloseBreak symbol = if ((symbol == ')') || (symbol == '}') || (symbol == ']')) then True else False
+checkCloseBreak symbol = ((symbol == ')') || (symbol == '}') || (symbol == ']'))
 
 checkBreaks :: [Char] -> [Char] -> Bool
 checkBreaks [] [] = True
