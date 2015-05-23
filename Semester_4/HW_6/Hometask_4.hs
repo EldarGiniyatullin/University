@@ -1,4 +1,3 @@
-import Test.HUnit
 import Control.Monad
 
 data Graph v e = Graph [(Int,v)] [(Int,Int,e)]
